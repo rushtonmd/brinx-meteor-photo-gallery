@@ -4,16 +4,13 @@ FS.HTTP.setHeadersForGet([
 ]);
 
 //Create the master store
-var masterStore = new FS.Store.FileSystem("master");
+var masterStore = new FS.Store.FileSystem("master"); 
 
 //Create a large store
-//Create a thumbnail store
 var largeStore = new FS.Store.FileSystem("large", {
     //Create the thumbnail as we save to the store.
     transformWrite: function(fileObj, readStream, writeStream) {
-        /* Use graphicsmagick to create a 300x300 square thumbnail at 100% quality,
-         * orient according to EXIF data if necessary and then save by piping to the
-         * provided writeStream */
+        // Use graphicsmagick to create a 1200px image while maintaining the aspect ratio
 
         gm(readStream, fileObj.name)
             .resize(1200)
