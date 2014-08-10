@@ -1,0 +1,107 @@
+<head>
+    <title>brinx photo gallery</title>
+</head>
+
+<body>
+    <header>
+        <!-- <form name="uploadForm">
+            <input id="fileInput" type="file" multiple="multiple">
+        </form> -->
+    </header>
+    {{>mediaItems}} {{>modifyModal}}
+
+</body>
+
+<template name="mediaItems">
+
+    <div id="images" class="container">
+    	<div class="row input-file-row">
+			<div class="col-md-6 col-md-offset-3">
+			    <span class="btn btn-file btn-primary">
+			    	<i class="glyphicon glyphicon-upload"></i>
+				    Upload Images <input id="fileInput" type="file" multiple="multiple">
+				</span>
+			</div>
+			
+    	</div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div id="media-list">
+                    {{#each mediaItems}} {{>mediaItem}} {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<template name="mediaItem">
+    <div class="media-item" media-id="{{_id}}">
+        <div class="row">
+            <div class="col-md-3">
+            	{{#with image}}
+            	{{#if url store="thumbnail"}} {{! if we have a url to the thumbnail store we will display the image}}
+	                <a class="pull-left" href="{{url store="master"}}">
+	                    <img class="media-object" src="{{url store="thumbnail"}}" full_size_src="{{url store="master"}}" meta_width="{{metadata.width}}" meta_height="{{metadata.height}}">
+	                </a>
+				{{else}} {{! Since we are do not have a url lets show a placeholder image}}
+			        <img src="/uploading.png">{{#unless isUploaded}} {{! If we haven't fully uploaded the file yet show the progress}}
+			        <p class="uploadProgress">uploading..{{uploadProgress}}%</p>
+		        {{else}} {{! Since we have a fully uploaded file but the store hasn't finished processing yet, we will display a processing message. }}
+		        <p class="uploadProgress">processing..</p>
+		        {{/unless}} {{/if}} {{/with}}
+            </div>
+            <div class="media-body col-md-7">
+                <h4 class="media-heading">{{title}}</h4>
+                <p>{{description}}</p>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-info edit-image row-buttons" data-toggle="modal" data-target="#myModal" media-id="{{_id}}">Edit</button>
+                <button type="button" class="btn btn-danger delete-image row-buttons" media-id="{{_id}}">Delete</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+<template name="images">
+    <div id="images" class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div id="media-list">
+                    {{#each images}} {{>photoTile}} {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+<template name="photoTile">
+    <div class="media" media-id="{{_id}}">
+        {{#if url store="thumbnail"}} {{! if we have a url to the thumbnail store we will display the image}}
+        <div class="row">
+            <div class="media-body col-md-2">
+                <a class="pull-left" href="{{url store=" master "}}">
+                    <img class="media-object" src="{{url store=" thumbnail "}}" full_size_src="{{url store=" master "}}" meta_width="{{metadata.width}}" meta_height="{{metadata.height}}">
+                </a>
+            </div>
+            <div class="media-body col-md-8">
+                <h4 class="media-heading">{{metadata.mediaTitle}}</h4>
+                <p>{{metadata.mediaDescription}}</p>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-info edit-image" data-toggle="modal" data-target="#myModal" media-id="{{_id}}">Edit</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+        {{else}} {{! Since we are do not have a url lets show a placeholder image}}
+        <img src="/uploading.png">{{#unless isUploaded}} {{! If we haven't fully uploaded the file yet show the progress}}
+        <p class="uploadProgress">uploading..{{uploadProgress}}%</p>
+        {{else}} {{! Since we have a fully uploaded file but the store hasn't finished processing yet, we will display a processing message. }}
+        <p class="uploadProgress">processing..</p>
+        {{/unless}} {{/if}}
+    </div>
+</template>
