@@ -1,16 +1,5 @@
-# CollectionFS Demo
-
-Demo for the `devel` branch of CollectionFS. Updated 4/2/14 to reflect the latest changes to the API.
-
-## Getting Started
-
-1. `git clone https://github.com/copleykj/CollectionFS-Demo.git`
-
-2. Run `mrt install`
-
-3. Add any of the dependent packages to meteor by running `meteor add packageName`
-
-4. Install graphics magick on your system.
+<<<<<<< HEAD
+# Brinx Meteor Photo Gallery
 
 
 ## Dependent Packages.
@@ -27,6 +16,4 @@ When installing in your own project you will have to add the cfs-gridfs, cfs-fil
 
 *cfs-graphicsmagick* - https://github.com/CollectionFS/Meteor-cfs-graphicsmagick
 
-##Styles
 
-When creating this project I used Compass and Susy SASS frameworks. They are not required to run the project but if you wish to use this for the base of another project you'll need to install SASS, Compass and Susy.
