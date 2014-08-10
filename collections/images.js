@@ -6,6 +6,21 @@ FS.HTTP.setHeadersForGet([
 //Create the master store
 var masterStore = new FS.Store.FileSystem("master");
 
+//Create a large store
+//Create a thumbnail store
+var largeStore = new FS.Store.FileSystem("large", {
+    //Create the thumbnail as we save to the store.
+    transformWrite: function(fileObj, readStream, writeStream) {
+        /* Use graphicsmagick to create a 300x300 square thumbnail at 100% quality,
+         * orient according to EXIF data if necessary and then save by piping to the
+         * provided writeStream */
+
+        gm(readStream, fileObj.name)
+            .resize(1200)
+            .quality(80).autoOrient().stream().pipe(writeStream);
+    }
+});
+
 //Create a thumbnail store
 var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
     //Create the thumbnail as we save to the store.
@@ -39,9 +54,9 @@ var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
 
 //Create globally scoped Images collection.
 Images = new FS.Collection("images", {
-    stores: [thumbnailStore, masterStore],
+    stores: [thumbnailStore, largeStore, masterStore],
     filter: {
-        maxSize: 10485760, //in bytes
+        maxSize: 50331648, //in bytes
         allow: {
             contentTypes: ['image/*'],
             extensions: ['png', 'jpg', 'jpeg', 'gif']
