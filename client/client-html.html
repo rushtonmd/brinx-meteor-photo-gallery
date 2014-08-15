@@ -48,10 +48,10 @@
             	{{#if url store="thumbnail"}} {{! if we have a url to the thumbnail store we will display the image}}
                     <div class="thumbnail" style="background-image:url('{{url store="thumbnail"}}')" thumbnail_src="{{url store="thumbnail"}}" full_size_src="{{url store="master"}}" meta_width="{{metadata.width}}" meta_height="{{metadata.height}}"></div>
 				{{else}} {{! Since we are do not have a url lets show a placeholder image}}
-			        <img src="/uploading.png">{{#unless isUploaded}} {{! If we haven't fully uploaded the file yet show the progress}}
-			        <p class="uploadProgress">uploading..{{uploadProgress}}%</p>
+			        <img src="/uploading_processing_bw.gif">{{#unless isUploaded}} {{! If we haven't fully uploaded the file yet show the progress}}
+			        <p class="uploadProgress">uploading...</p>
 		        {{else}} {{! Since we have a fully uploaded file but the store hasn't finished processing yet, we will display a processing message. }}
-		        <p class="uploadProgress">processing..</p>
+		        <p class="uploadProgress">processing...</p>
 		        {{/unless}} {{/if}} {{/with}}
             </div>
             <div class="media-body col-xs-6">
@@ -102,9 +102,9 @@
         </div>
         {{else}} {{! Since we are do not have a url lets show a placeholder image}}
         <img src="/uploading.png">{{#unless isUploaded}} {{! If we haven't fully uploaded the file yet show the progress}}
-        <p class="uploadProgress">uploading..{{uploadProgress}}%</p>
+        <p class="uploadProgress">working...</p>
         {{else}} {{! Since we have a fully uploaded file but the store hasn't finished processing yet, we will display a processing message. }}
-        <p class="uploadProgress">processing..</p>
+        <p class="uploadProgress">saving...</p>
         {{/unless}} {{/if}}
     </div>
 </template>
