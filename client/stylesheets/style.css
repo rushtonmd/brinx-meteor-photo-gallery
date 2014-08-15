@@ -94,7 +94,7 @@ div.handle {
     cursor: move;
     font-size: 2.5rem;
     opacity: 0.2;
-    z-index: 10000; 
+    z-index: 1; 
 }
 .row-buttons {
     width: 100%;
