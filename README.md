@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 # Brinx Meteor Photo Gallery
 
 
 ## Dependent Packages.
-
-When installing in your own project you will have to add the cfs-gridfs, cfs-filesystem, cfs-handlebars, and cfs-graphics magic using `meteor add` even after adding them to your smart.json.
 
 *Install graphics magick on your system to use the cfs-graphicsmagick features*
 
