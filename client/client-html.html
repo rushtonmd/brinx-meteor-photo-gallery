@@ -25,7 +25,7 @@
 			
     	</div>
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-8 col-md-offset-2">
                 <div id="media-list">
                     {{#each mediaItems}} {{>mediaItem}} {{/each}}
                 </div>
@@ -48,7 +48,7 @@
             	{{#if url store="thumbnail"}} {{! if we have a url to the thumbnail store we will display the image}}
                     <div class="thumbnail" style="background-image:url('{{url store="thumbnail"}}')" thumbnail_src="{{url store="thumbnail"}}" full_size_src="{{url store="master"}}" meta_width="{{metadata.width}}" meta_height="{{metadata.height}}"></div>
 				{{else}} {{! Since we are do not have a url lets show a placeholder image}}
-			        <img src="/uploading_processing_bw.gif">{{#unless isUploaded}} {{! If we haven't fully uploaded the file yet show the progress}}
+			        <img class="loading-animation" src="/uploading_processing_bw.gif">{{#unless isUploaded}} {{! If we haven't fully uploaded the file yet show the progress}}
 			        <p class="uploadProgress">uploading...</p>
 		        {{else}} {{! Since we have a fully uploaded file but the store hasn't finished processing yet, we will display a processing message. }}
 		        <p class="uploadProgress">processing...</p>
