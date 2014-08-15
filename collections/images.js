@@ -43,15 +43,16 @@ var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
                 function(error) {
                     console.log('Error in bindEnvironment:', error);
                 }))
-            .resize(300, 300, "^").gravity('Center').crop(300, 300)
-            .quality(75).autoOrient().stream().pipe(writeStream);
+            // .resize(300, 300, "^").gravity('Center').crop(300, 300)
+            // .quality(75).autoOrient().stream().pipe(writeStream);
+            .resize(1000).quality(75).autoOrient().stream().pipe(writeStream);
     }
 });
 
 
 //Create globally scoped Images collection.
 Images = new FS.Collection("images", {
-    stores: [thumbnailStore, largeStore, masterStore],
+    stores: [thumbnailStore, masterStore],
     filter: {
         maxSize: 50331648, //in bytes
         allow: {

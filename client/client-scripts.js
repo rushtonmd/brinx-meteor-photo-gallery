@@ -43,10 +43,12 @@ UI.body.events({
         $(".modal-header .media-title").val(newTitle);
         var newBody = $("div.media-item[media-id='" + mediaID + "']").find(".media-body p").html();
         $(".modal-body .media-description").val(newBody);
-        var imageSource = $("div.media-item[media-id='" + mediaID + "']").find("img.media-object").attr('full_size_src');
-        $(".modal-body img.media-object").attr('src', imageSource);
-        var metaWidth = $("div.media-item[media-id='" + mediaID + "']").find("img.media-object").attr('meta_width');
-        var metaHeight = $("div.media-item[media-id='" + mediaID + "']").find("img.media-object").attr('meta_height');
+        var thumbnailSource = $("div.media-item[media-id='" + mediaID + "']").find("div.thumbnail").attr('thumbnail_src');
+        $(".modal-body img.media-object").attr('src', thumbnailSource);
+        var masterSource = $("div.media-item[media-id='" + mediaID + "']").find("div.thumbnail").attr('full_size_src');
+        $(".modal-body a.media-object").attr('href', masterSource);
+        var metaWidth = $("div.media-item[media-id='" + mediaID + "']").find("div.thumbnail").attr('meta_width');
+        var metaHeight = $("div.media-item[media-id='" + mediaID + "']").find("div.thumbnail").attr('meta_height');
         $(".modal-body span.height-width").html(metaWidth + " x " + metaHeight);
         console.log("w" + metaWidth);
     },
@@ -104,6 +106,7 @@ SimpleRationalRanks = {
 Template.mediaItems.rendered = function() {
 
     this.$('#media-list').sortable({
+        handle: ".handle",
         stop: function(event, ui) { // fired when an item is dropped
             var el = ui.item.get(0),
                 before = ui.item.prev().get(0),
