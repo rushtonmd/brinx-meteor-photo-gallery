@@ -1,4 +1,4 @@
-UI.body.events({
+Template.mediaItems.events({
     'change #fileInput': function(event) {
         FS.Utility.eachFile(event, function(file) {
             var insertedPhoto = Images.insert(file, function(err, fileObj) {
@@ -50,7 +50,7 @@ UI.body.events({
         var metaWidth = $("div.media-item[media-id='" + mediaID + "']").find("div.thumbnail").attr('meta_width');
         var metaHeight = $("div.media-item[media-id='" + mediaID + "']").find("div.thumbnail").attr('meta_height');
         $(".modal-body span.height-width").html(metaWidth + " x " + metaHeight);
-        console.log("w" + metaWidth);
+        
     },
 
     'click .delete-image': function(event) {
@@ -69,13 +69,13 @@ UI.body.events({
 
 });
 
-Template.images.images = function() {
-    return Images.find({}, {
-        sort: {
-            rank: -1
-        }
-    });
-};
+// Template.images.images = function() {
+//     return Images.find({}, {
+//         sort: {
+//             rank: -1
+//         }
+//     });
+// };
 
 Template.mediaItems.mediaItems = function() {
     return MediaItems.find({}, {

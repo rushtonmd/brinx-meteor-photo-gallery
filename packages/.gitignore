@@ -27,3 +27,8 @@
 /cfs-ejson-file
 /reactive-property
 /micro-queue
+/iron-router
+/iron-layout
+/blaze-layout
+/iron-core
+/iron-dynamic-template

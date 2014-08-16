@@ -4,7 +4,7 @@ FS.HTTP.setHeadersForGet([
 ]);
 
 //Create the master store
-var masterStore = new FS.Store.FileSystem("master"); 
+var masterStore = new FS.Store.FileSystem("master");
 
 //Create a large store
 var largeStore = new FS.Store.FileSystem("large", {
@@ -43,9 +43,9 @@ var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
                 function(error) {
                     console.log('Error in bindEnvironment:', error);
                 }))
-            // .resize(300, 300, "^").gravity('Center').crop(300, 300)
-            // .quality(75).autoOrient().stream().pipe(writeStream);
-            .resize(1000).quality(75).autoOrient().stream().pipe(writeStream);
+        // .resize(300, 300, "^").gravity('Center').crop(300, 300)
+        // .quality(75).autoOrient().stream().pipe(writeStream);
+        .resize(1000).quality(75).autoOrient().stream().pipe(writeStream);
     }
 });
 
@@ -103,17 +103,32 @@ Images.allow({
 
 
 
+
+
 //If we're on the server publish the collection, otherwise we are on the client and we should subscribe to the publication.
 if (Meteor.isServer) {
 
     // TODO: Create a query to return the right stuff for the api call
-    HTTP.publish({
-        name: 'api/images-list'
-    }, function(data) {
-        
-        // this.userId, this.query, this.params
-        return MediaItems.find({});
-    });
+
+    
+
+    // HTTP.publish({
+    //     name: 'api/images-list'
+    // }, function(data) {
+
+    //     // this.userId, this.query, this.params
+    //     var allItems = MediaItems.find({}).fetch();
+    //     var returnData = [];
+    //     _.each(allItems, function(mediaItem) {
+
+    //         var url = mediaItem.file.getFileRecord().url("thumbnail");
+    //         returnData.push(url);
+    //         //console.log(url);
+    //     });
+    //     // MediaItems.findOne().file.getFileRecord().url("thumbnail")
+    //     console.log(EJSON.stringify(returnData));
+    //     return EJSON.stringify(returnData);
+    // });
 
     Meteor.publish('mediaItems', function() {
         return MediaItems.find({

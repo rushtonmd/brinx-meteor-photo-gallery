@@ -62,9 +62,8 @@
     right: 5px;
     text-align: center;
 }
-
 .media-item {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 .media-item .row {
     background-color: rgb(230, 230, 230);
@@ -73,19 +72,17 @@
 .media-item img {
     width: 100px;
 }
-
 .media-item div.thumbnail {
     width: 120px;
     height: 120px;
     background-size: cover;
     background-position: 50% 50%;
+    margin: 0px;
 }
-
 img.loading-animation {
     width: 120px;
     height: 120px;
 }
-
 .modal-body img {
     width: 90%;
     margin: 5px;
@@ -93,14 +90,14 @@ img.loading-animation {
 div.handle {
     cursor: move;
     font-size: 2.5rem;
-    opacity: 0.2;
-    z-index: 1; 
+    opacity: 0.5;
+    z-index: 1;
 }
 .row-buttons {
     width: 100%;
     margin: 1px 0px;
+    font-size: 1.5rem;
 }
-
 .btn-file {
     position: relative;
     overflow: hidden;
@@ -123,4 +120,22 @@ div.handle {
     background: white;
     cursor: inherit;
     display: block;
+}
+@media screen and (max-width: 767px) {
+    .media-item div.thumbnail {
+        width: 100%;
+        height: 250px;
+    }
+
+    div.handle {
+        text-align: center;
+    }
+
+    i.glyphicon-align-justify {
+        margin: 0px 4rem; 
+    }
+
+    button.row-buttons {
+        font-size: 3rem;
+    }
 }
