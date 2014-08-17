@@ -1,4 +1,13 @@
 <template name="mediaItems">
+	<nav class="navbar navbar-default" role="navigation">
+	  	<div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="/">Gallery</a>
+		      <a class="navbar-brand" href="/sign-out">Sign-Out</a>
+		    </div>
+		</div>
+	</nav>
     <div id="images" class="container">
     	<div class="row input-file-row">
 			<div class="col-md-6 col-md-offset-3">
@@ -34,6 +43,7 @@
             	{{#with image}}
             	{{#if url store="thumbnail"}} {{! if we have a url to the thumbnail store we will display the image}}
                     <div class="thumbnail" style="background-image:url('{{url store="thumbnail"}}')" thumbnail_src="{{url store="thumbnail"}}" full_size_src="{{url store="master"}}" meta_width="{{metadata.width}}" meta_height="{{metadata.height}}"></div>
+
 				{{else}} {{! Since we are do not have a url lets show a placeholder image}}
 			        <img class="loading-animation" src="/uploading_processing_bw.gif">{{#unless isUploaded}} {{! If we haven't fully uploaded the file yet show the progress}}
 			        <p class="uploadProgress">uploading...</p>

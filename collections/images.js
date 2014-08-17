@@ -4,10 +4,11 @@ FS.HTTP.setHeadersForGet([
 ]);
 
 //Create the master store
-var masterStore = new FS.Store.FileSystem("master");
+var masterStore = new FS.Store.FileSystem("master",{path: "~/uploads/master"});
 
 //Create a large store
 var largeStore = new FS.Store.FileSystem("large", {
+    path: "~/uploads/large",
     //Create the thumbnail as we save to the store.
     transformWrite: function(fileObj, readStream, writeStream) {
         // Use graphicsmagick to create a 1200px image while maintaining the aspect ratio
@@ -20,6 +21,7 @@ var largeStore = new FS.Store.FileSystem("large", {
 
 //Create a thumbnail store
 var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
+    path: "~/uploads/thumbnails",
     //Create the thumbnail as we save to the store.
     transformWrite: function(fileObj, readStream, writeStream) {
         /* Use graphicsmagick to create a 300x300 square thumbnail at 100% quality,
@@ -79,7 +81,7 @@ MediaItems.allow({
         return true;
     },
     remove: function(userId, file) {
-        return true;
+        return false;
     }
 });
 
@@ -93,7 +95,7 @@ Images.allow({
         return true;
     },
     remove: function(userId, file) {
-        return true;
+        return false;
     },
     download: function() {
         return true;

@@ -5,11 +5,12 @@
     var scrollSpeed = 30;
     var pauseDuration = 4000;
     var pauseThisTime = pauseDuration;
+    var scrolling = true;
     brinx.imageList = [];
 
     $(function() {
-        brinx.retrieveImagesListAPI();
-        scrollWindow();
+        //brinx.retrieveImagesListAPI();
+        //scrollWindow();
     });
 
     function showImageCaption() {
@@ -21,7 +22,17 @@
         loadAllImages(brinx.imageList);
     });
 
+    brinx.stopScrolling = function() {
+    	scrolling = false;
+    };
+
+    brinx.startScrolling = function() {
+    	scrolling = true;
+    	scrollWindow();
+    };
+
     function scrollWindow() {
+    	if (!scrolling) return;
         if (window.pageYOffset != currentPosition) {
             pauseThisTime = pauseDuration;
             currentPosition = window.pageYOffset;
@@ -44,6 +55,7 @@
             $.each(data.mediaItems, function(key, val) {
                 var imageEntry = {};
                 imageEntry.url_n = val.thumbnailUrl;
+                imageEntry.url_main_n = val.masterUrl;
                 imageEntry.width_n = val.width;
                 imageEntry.height_n = val.height;
                 imageEntry.caption_n = val.description;
@@ -52,6 +64,7 @@
 
             loadAllImages(brinx.imageList);
         });
+        brinx.startScrolling();
     }
 
     brinx.retrieveImageList = function(root) {
@@ -163,6 +176,8 @@
             var multiplier = (((targetHeight / photo.height_n) * photo.width_n) + imageWidthDelta) / photo.width_n;
 
             (function() {
+            	// Need to add download button
+            	//<a href="{{this.url download=true}}" class="btn btn-primary">Download</a>
                 var imgDiv = $('<div/>', {
                     class: "delayImageDiv",
                     width: photo.width_n * multiplier,

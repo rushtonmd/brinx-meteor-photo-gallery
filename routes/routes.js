@@ -1,9 +1,17 @@
 Router.map(function() {
     this.route('gallery', {
-        path: '/'
+        path: '/',
+        onBeforeAction: function(pause) {
+            brinx.retrieveImagesListAPI();
+        }
     });
     this.route('mediaItems', {
-        path: '/admin'
+        path: '/admin',
+        onBeforeAction: function(pause) {
+            // render the login template but keep the url in the browser the same
+            AccountsEntry.signInRequired(this);
+            brinx.stopScrolling();
+        }
     });
     this.route('methodExample', {
         path: '/api/media-items',
@@ -34,8 +42,13 @@ Router.map(function() {
                     title: mediaItem.title,
                     description: mediaItem.description,
                     rank: mediaItem.rank,
+                    width: mediaItem.file.getFileRecord().metadata.width,
+                    height: mediaItem.file.getFileRecord().metadata.height,
                     masterUrl: mediaItem.file.getFileRecord().url("master"),
-                    thumbnailUrl: mediaItem.file.getFileRecord().url("thumbnail")
+                    thumbnailUrl: mediaItem.file.getFileRecord().url({
+                        store: 'thumbnail',
+                        auth: false
+                    })
                 };
                 returnData.mediaItems.push(mItem);
                 //console.log(url);
@@ -52,7 +65,7 @@ Router.map(function() {
             this.response.end(EJSON.stringify(returnData));
         }
     });
-    this.route('404', {
-        path: '*'
-    });
+    // this.route('404', {
+    //     path: '/*'
+    // });
 });
