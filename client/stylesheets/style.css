@@ -1,5 +1,6 @@
-html { font-size:62.5%; }
-
+html {
+    font-size: 62.5%;
+}
 /* line 6, ../sass/style.scss */
 
 .photo_tile {
@@ -123,86 +124,115 @@ div.handle {
     cursor: inherit;
     display: block;
 }
-
 div.home-template {
     height: 100vh;
     background: url('greybg1.jpg');
-    background-attachment:fixed;
+    background-attachment: fixed;
 }
-
 .delayImageDiv {
-    float:left;
-
+    float: left;
 }
 .delayImg {
     background: rgba(255, 255, 255, 1.0);
-    padding:3px;
+    padding: 3px;
 }
-
 .photo-row {
     opacity: 0;
     cursor: pointer;
-
 }
-
 div#image-container {
-    height:100px;
+    height: 100px;
 }
-
-
-.popover .popover-title {font-family: 'Pinyon Script', 'cursive'; font-size: 3rem; color:#A6C7AD; padding-top: 1.3rem; opacity: 0.8}
-.popover .popover-content {font-family: 'Coming Soon', 'cursive'; font-size: 2rem; opacity: 0.6;}
-
- #banner-content { 
-    top:38%; 
+.popover .popover-title {
+    font-family: 'Pinyon Script', 'cursive';
+    font-size: 3rem;
+    color: #A6C7AD;
+    padding-top: 1.3rem;
+    opacity: 0.8
+}
+.popover .popover-content {
+    font-family: 'Coming Soon', 'cursive';
+    font-size: 2rem;
+    opacity: 0.6;
+}
+#banner-content {
+    top: 38%;
     text-align: center;
     left: 5rem;
-    right:5rem;
-    transform:translate(0,-50%); 
-    -webkit-transform:translate(0,-50%); 
-    position:absolute; 
+    right: 5rem;
+    transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
+    position: absolute;
     font-family: 'Pinyon Script', 'cursive';
     font-size: 10rem;
-    color:#A6C7AD;
-
+    color: #A6C7AD;
 }
-#banner-container { 
-    width:100%; 
-    height:100%;
-    position:relative; 
-
-} 
-
+#banner-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
 #bear-image {
     position: absolute;
-    bottom:0px;
+    bottom: 0px;
     height: 20rem;
     z-index: 1;
 }
-
 #bear-image img {
     height: 20rem;
     background: transparent;
 }
 
-
-
-
+@media screen and (max-width: 970px) {
+    html {
+        font-size: 45%;
+    }
+}
 @media screen and (max-width: 767px) {
-    .media-item div.thumbnail {
+    html {
+        font-size: 33%;
+    }
+    #banner-content {
+        line-height: 11rem;
+    }
+    .popover .popover-title {
+        font-size: 4rem;
+    }
+    .popover .popover-content {
+        font-size: 3.5rem;
+    }
+
+        .media-item div.thumbnail {
         width: 100%;
         height: 250px;
     }
-
+    img.loading-animation {
+        width: 100%;
+        height: 250px;
+    }
     div.handle {
         text-align: center;
     }
-
-    i.glyphicon-align-justify {
-        margin: 0px 4rem; 
+    div.handle .glyphicon {
+        font-size: 5rem;
     }
-
+    i.glyphicon-align-justify {
+        margin: 0px 6rem;
+    }
     button.row-buttons {
-        font-size: 2rem;
+        font-size: 4rem;
+    }
+    span.btn-file {
+        font-size: 6rem;
+    }
+}
+@media screen and (max-width: 450px) {
+    html {
+        font-size: 33%;
+    }
+}
+@media screen and (max-width: 350px) {
+    html {
+        font-size: 33%;
     }
 }

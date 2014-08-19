@@ -3,6 +3,7 @@ Router.map(function() {
         path: '/',
         onBeforeAction: function(pause) {
             brinx.retrieveImagesListAPI();
+            brinx.startScrolling();
         }
     });
     this.route('mediaItems', {

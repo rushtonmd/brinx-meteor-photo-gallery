@@ -23,23 +23,25 @@
     });
 
     brinx.stopScrolling = function() {
-    	scrolling = false;
+        scrolling = false;
     };
 
     brinx.startScrolling = function() {
-    	scrolling = true;
-    	scrollWindow();
+        scrolling = true;
+        scrollWindow();
     };
 
     function scrollWindow() {
-    	if (!scrolling) return;
-        if (window.pageYOffset != currentPosition) {
-            pauseThisTime = pauseDuration;
-            currentPosition = window.pageYOffset;
-        } else {
-            window.scroll(0, currentPosition + scrollAmount);
-            currentPosition = currentPosition + scrollAmount;
-            pauseThisTime = 0;
+        if (scrolling && $('.home-template').length > 0) {
+
+            if (window.pageYOffset != currentPosition) {
+                pauseThisTime = pauseDuration;
+                currentPosition = window.pageYOffset;
+            } else {
+                window.scroll(0, currentPosition + scrollAmount);
+                currentPosition = currentPosition + scrollAmount;
+                pauseThisTime = 0;
+            }
         }
 
         setTimeout(function() {
@@ -64,7 +66,6 @@
 
             loadAllImages(brinx.imageList);
         });
-        brinx.startScrolling();
     }
 
     brinx.retrieveImageList = function(root) {
@@ -176,8 +177,8 @@
             var multiplier = (((targetHeight / photo.height_n) * photo.width_n) + imageWidthDelta) / photo.width_n;
 
             (function() {
-            	// Need to add download button
-            	//<a href="{{this.url download=true}}" class="btn btn-primary">Download</a>
+                // Need to add download button
+                //<a href="{{this.url download=true}}" class="btn btn-primary">Download</a>
                 var imgDiv = $('<div/>', {
                     class: "delayImageDiv",
                     width: photo.width_n * multiplier,

@@ -4,7 +4,9 @@ FS.HTTP.setHeadersForGet([
 ]);
 
 //Create the master store
-var masterStore = new FS.Store.FileSystem("master",{path: "~/uploads/master"});
+var masterStore = new FS.Store.FileSystem("master",{
+    path: "~/uploads/master"
+});
 
 //Create a large store
 var largeStore = new FS.Store.FileSystem("large", {
@@ -29,6 +31,7 @@ var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
          * provided writeStream */
 
         gm(readStream, fileObj.name)
+            .autoOrient()
             .size({
                 bufferStream: true
             }, Meteor.bindEnvironment(
@@ -47,7 +50,7 @@ var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
                 }))
         // .resize(300, 300, "^").gravity('Center').crop(300, 300)
         // .quality(75).autoOrient().stream().pipe(writeStream);
-        .resize(1000).quality(75).autoOrient().stream().pipe(writeStream);
+        .resize(1000).quality(75).stream().pipe(writeStream);
     }
 });
 
