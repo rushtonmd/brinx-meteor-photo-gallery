@@ -4,6 +4,7 @@ Template.mediaItems.events({
             var insertedPhoto = Images.insert(file, function(err, fileObj) {
                 //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
                 //var readStream = fileObj.createReadStream('master');
+                SetImageSize(insertedPhoto);
             });
             MediaItems.insert({
                 title: insertedPhoto.name(),
@@ -16,20 +17,41 @@ Template.mediaItems.events({
 
     },
 
+    'click .flip-dimensions': function(event) {
+        var newWidth = $("input.image-width").val();
+        var newHeight = $("input.image-height").val();
+
+        $("input.image-width").val(newHeight);
+        $("input.image-height").val(newWidth);
+    },
+
     'click .save-changes-to-media': function(event) {
 
         var mediaID = $("button.save-changes-to-media").attr('media-id');
         var newDescription = $(".modal-body .media-description").val();
         var newTitle = $(".modal-header .media-title").val();
+        var newWidth = $("input.image-width").val();
+        var newHeight = $("input.image-height").val();
 
-
-        console.log(newTitle);
         MediaItems.update({
             "_id": mediaID
         }, {
             $set: {
                 "description": newDescription,
                 "title": newTitle
+            }
+        });
+
+        var imageID = MediaItems.findOne({
+            "_id": mediaID
+        }).file._id;
+
+        Images.update({
+            "_id": imageID
+        }, {
+            $set: {
+                'metadata.width': newWidth,
+                'metadata.height': newHeight
             }
         });
 
@@ -49,8 +71,10 @@ Template.mediaItems.events({
         $(".modal-body a.media-object").attr('href', masterSource);
         var metaWidth = $("div.media-item[media-id='" + mediaID + "']").find("div.thumbnail").attr('meta_width');
         var metaHeight = $("div.media-item[media-id='" + mediaID + "']").find("div.thumbnail").attr('meta_height');
-        $(".modal-body span.height-width").html(metaWidth + " x " + metaHeight);
-        
+        /* $(".modal-body span.height-width").html(metaWidth + " x " + metaHeight);*/
+        $("input.image-width").val(metaWidth);
+        $("input.image-height").val(metaHeight);
+
     },
 
     'click .delete-image': function(event) {

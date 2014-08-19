@@ -4,7 +4,7 @@ FS.HTTP.setHeadersForGet([
 ]);
 
 //Create the master store
-var masterStore = new FS.Store.FileSystem("master",{
+var masterStore = new FS.Store.FileSystem("master", {
     path: "~/uploads/master"
 });
 
@@ -115,7 +115,7 @@ if (Meteor.isServer) {
 
     // TODO: Create a query to return the right stuff for the api call
 
-    
+
 
     // HTTP.publish({
     //     name: 'api/images-list'

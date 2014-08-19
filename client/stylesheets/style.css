@@ -90,6 +90,15 @@ img.loading-animation {
     width: 90%;
     margin: 5px;
 }
+
+input.modal-dimension {
+    width: auto;
+}
+
+div.dimension-area {
+    margin-top: 1rem;
+}
+
 div.handle {
     cursor: move;
     font-size: 2.5rem;

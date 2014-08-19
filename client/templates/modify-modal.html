@@ -13,7 +13,17 @@
                 <div class="modal-body">
                     <span>Description:</span>
                     <textarea class="form-control media-description" rows="3"></textarea>
-                    <span>Image Size (W x H): </span><span class="height-width"></span>
+                    <div class="dimension-area">
+                        <div>Image Size (W x H):
+                            <input type="text" class="form-control modal-dimension image-width">
+                            x
+                            <input type="text" class="form-control modal-dimension image-height">
+                        
+                        <button type="button" class="btn btn-default flip-dimensions">
+                          <i class="glyphicon glyphicon-retweet"></i> 
+                        </button>
+                        </div>
+                    </div>
                     <a class="media-object">
                         <img class="media-object"/>
                     </a>
