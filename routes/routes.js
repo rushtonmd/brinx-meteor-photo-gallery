@@ -60,9 +60,14 @@ Router.map(function() {
 
 
             // Could be, e.g. application/xml, etc.
-            this.response.writeHead(200, {
-                'Content-Type': 'application/json'
-            });
+            // this.response.writeHead(200, {
+            //     'Content-Type': 'application/json'
+            // });
+
+            this.response.statusCode = 200;
+            this.response.setHeader("Content-Type", "application/json");
+            this.response.setHeader("Access-Control-Allow-Origin", "*");
+            this.response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             this.response.end(EJSON.stringify(returnData));
         }
     });
