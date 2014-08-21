@@ -1,6 +1,6 @@
 Meteor.startup(function() {
     AccountsEntry.config({
-        signupCode: 'brinkley'//, // only restricts username+password users, not OAuth
+        signupCode: process.env.BRINX_SIGNUP_CODE || 'brinkley'//, // only restricts username+password users, not OAuth
         //defaultProfile: someDefault: 'default'
     });
 });

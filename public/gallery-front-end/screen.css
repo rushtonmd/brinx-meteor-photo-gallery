@@ -2,7 +2,7 @@
 html { font-size:62.5%; }
 
 body {
-    background: url('https://googledrive.com/host/0B18xxyTNHKYOdW1lMkxSeE9QT0U/greybg1.jpg');
+    background: url('greybg1.jpg');
     background-attachment:fixed;
 }
 
@@ -52,7 +52,11 @@ div#image-container {
 
 #bear-image {
     position: absolute;
-    bottom:0px;
+    bottom: 0px;
+    height: 20rem;
+    z-index: 1;
+}
+#bear-image img {
     height: 20rem;
     background: transparent;
 }

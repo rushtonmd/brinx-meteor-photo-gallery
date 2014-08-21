@@ -1,13 +1,13 @@
 Router.map(function() {
-    this.route('gallery', {
-        path: '/',
-        onBeforeAction: function(pause) {
-            brinx.retrieveImagesListAPI();
-            brinx.startScrolling();
-        }
-    });
+    // this.route('gallery', {
+    //     path: '/',
+    //     onBeforeAction: function(pause) {
+    //         brinx.retrieveImagesListAPI();
+    //         brinx.startScrolling();
+    //     }
+    // });
     this.route('mediaItems', {
-        path: '/admin',
+        path: '/',
         onBeforeAction: function(pause) {
             // render the login template but keep the url in the browser the same
             AccountsEntry.signInRequired(this);

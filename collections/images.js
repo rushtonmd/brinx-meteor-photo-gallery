@@ -8,19 +8,6 @@ var masterStore = new FS.Store.FileSystem("master", {
     path: "~/uploads/master"
 });
 
-//Create a large store
-var largeStore = new FS.Store.FileSystem("large", {
-    path: "~/uploads/large",
-    //Create the thumbnail as we save to the store.
-    transformWrite: function(fileObj, readStream, writeStream) {
-        // Use graphicsmagick to create a 1200px image while maintaining the aspect ratio
-
-        gm(readStream, fileObj.name)
-            .resize(1200)
-            .quality(80).autoOrient().stream().pipe(writeStream);
-    }
-});
-
 //Create a thumbnail store
 var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
     path: "~/uploads/thumbnails",
