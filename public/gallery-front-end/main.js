@@ -39,7 +39,7 @@
 
     brinx.retrieveImagesListAPI = function() {
 
-        $.getJSON("/api/media-items", function(data) {
+        $.getJSON("//admin.brinkleyrushton.com/api/media-items", function(data) {
             var items = [];
             $.each(data.mediaItems, function(key, val) {
                 var imageEntry = {};
