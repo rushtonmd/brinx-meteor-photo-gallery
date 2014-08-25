@@ -16,28 +16,8 @@ var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
         /* Use graphicsmagick to create a 300x300 square thumbnail at 100% quality,
          * orient according to EXIF data if necessary and then save by piping to the
          * provided writeStream */
+        createThumbnailImage(fileObj, readStream, writeStream);
 
-        gm(readStream, fileObj.name)
-            .autoOrient()
-            .size({
-                bufferStream: true
-            }, Meteor.bindEnvironment(
-                function(err, size) {
-                    if (!err) {
-                        fileObj.update({
-                            $set: {
-                                'metadata.width': size.width,
-                                'metadata.height': size.height
-                            }
-                        });
-                    }
-                },
-                function(error) {
-                    console.log('Error in bindEnvironment:', error);
-                }))
-        // .resize(300, 300, "^").gravity('Center').crop(300, 300)
-        // .quality(75).autoOrient().stream().pipe(writeStream);
-        .resize(1000).quality(75).stream().pipe(writeStream);
     }
 });
 
@@ -60,6 +40,14 @@ Images = new FS.Collection("images", {
         }
     }
 });
+
+
+
+Images.on("stored", Meteor.bindEnvironment(function (f, s) {
+    if (s == 'thumbnail') setImageMetaSize(f,s);
+}, function (e) { console.log('Failed to bind environment:' + e); }));
+
+
 
 MediaItems = new Meteor.Collection('mediaItems');
 
@@ -94,33 +82,8 @@ Images.allow({
 
 
 
-
-
-
 //If we're on the server publish the collection, otherwise we are on the client and we should subscribe to the publication.
 if (Meteor.isServer) {
-
-    // TODO: Create a query to return the right stuff for the api call
-
-
-
-    // HTTP.publish({
-    //     name: 'api/images-list'
-    // }, function(data) {
-
-    //     // this.userId, this.query, this.params
-    //     var allItems = MediaItems.find({}).fetch();
-    //     var returnData = [];
-    //     _.each(allItems, function(mediaItem) {
-
-    //         var url = mediaItem.file.getFileRecord().url("thumbnail");
-    //         returnData.push(url);
-    //         //console.log(url);
-    //     });
-    //     // MediaItems.findOne().file.getFileRecord().url("thumbnail")
-    //     console.log(EJSON.stringify(returnData));
-    //     return EJSON.stringify(returnData);
-    // });
 
     Meteor.publish('mediaItems', function() {
         return MediaItems.find({
@@ -130,30 +93,7 @@ if (Meteor.isServer) {
         });
     });
     Meteor.publish('images', function() {
-        /*Uncomment this and comment out returning the cursor to see publication issue*/
-
-        // var self = this;
-
-        // var handle = Images.find().observe({
-        //     added: function (document) {
-        //         self.added('images', document._id, document);
-        //     },
-        //     changed: function (document) {
-        //         self.changed('images', document._id, document);
-        //     },
-        //     removed: function (document) {
-        //         self.removed('images', document._id);
-        //     }
-        // });
-
-        // self.onStop(function () {
-        //     handle.stop();
-        // });
-
-        /*Comment this out and Uncomment manual publishing to see publication issue*/
-
         return Images.find();
-
     });
 
 } else {

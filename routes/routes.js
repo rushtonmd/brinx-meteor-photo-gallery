@@ -14,7 +14,7 @@ Router.map(function() {
             brinx.stopScrolling();
         }
     });
-    this.route('methodExample', {
+    this.route('methodExample', { //TODO Add allow methods of GET only : Access-Control-Allow-Methods : if(this.request.method == 'GET') {
         path: '/api/media-items',
         where: 'server',
         action: function() {
@@ -54,15 +54,7 @@ Router.map(function() {
                 returnData.mediaItems.push(mItem);
                 //console.log(url);
             });
-            // MediaItems.findOne().file.getFileRecord().url("thumbnail")
-            //console.log(EJSON.stringify(returnData));
-            //return EJSON.stringify(returnData);
 
-
-            // Could be, e.g. application/xml, etc.
-            // this.response.writeHead(200, {
-            //     'Content-Type': 'application/json'
-            // });
 
             this.response.statusCode = 200;
             this.response.setHeader("Content-Type", "application/json");
@@ -71,7 +63,7 @@ Router.map(function() {
             this.response.end(EJSON.stringify(returnData));
         }
     });
-    // this.route('404', {
-    //     path: '/*'
-    // });
+    this.route('404', {
+        path: '/*'
+    });
 });

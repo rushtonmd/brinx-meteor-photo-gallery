@@ -18,3 +18,5 @@ iron-router
 accounts-ui-bootstrap-3
 accounts-password
 accounts-entry
+queue
+power-queue

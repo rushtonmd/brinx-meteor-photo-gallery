@@ -4,7 +4,7 @@ Template.mediaItems.events({
             var insertedPhoto = Images.insert(file, function(err, fileObj) {
                 //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
                 //var readStream = fileObj.createReadStream('master');
-                SetImageSize(insertedPhoto);
+                //SetImageSize(insertedPhoto);
             });
             MediaItems.insert({
                 title: insertedPhoto.name(),

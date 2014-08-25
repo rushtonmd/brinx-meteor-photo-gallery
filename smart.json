@@ -9,6 +9,7 @@
     "jquery-ui-touch-punch": {},
     "iron-router": {},
     "accounts-ui-bootstrap-3": {},
-    "accounts-entry": {}
+    "accounts-entry": {},
+    "queue": {}
   }
 }

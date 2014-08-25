@@ -56,8 +56,12 @@
                 <p>{{description}}</p>
             </div>
             <div class="col-sm-2">
-                <button type="button" class="btn btn-info edit-image row-buttons" data-toggle="modal" data-target="#myModal" media-id="{{_id}}">Edit</button>
-                <button type="button" class="btn btn-danger delete-image row-buttons" media-id="{{_id}}">Delete</button>
+            	<span class="btn btn-info edit-image row-buttons" data-toggle="modal" data-target="#myModal" media-id="{{_id}}">
+			    	<i class="glyphicon glyphicon-pencil"></i>
+				</span>
+            	<span class="btn btn-danger delete-image row-buttons" media-id="{{_id}}">
+			    	<i class="glyphicon glyphicon-remove"></i>
+				</span>
             </div>
         </div>
     </div>

@@ -43,7 +43,7 @@
             var items = [];
             $.each(data.mediaItems, function(key, val) {
                 var imageEntry = {};
-                imageEntry.url_n = val.thumbnailUrl;
+                imageEntry.url_n = "//admin.brinkleyrushton.com" + val.thumbnailUrl;
                 imageEntry.width_n = val.width;
                 imageEntry.height_n = val.height;
                 imageEntry.caption_n = val.description;
