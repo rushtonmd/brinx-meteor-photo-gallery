@@ -108,7 +108,7 @@ div.handle {
 .row-buttons {
     width: 100%;
     margin: 1px 0px;
-    font-size: 1.5rem;
+    font-size: 2.5rem;
 }
 .btn-file {
     position: relative;
@@ -193,55 +193,17 @@ div#image-container {
 }
 
 @media screen and (max-width: 970px) {
-    html {
-        font-size: 45%;
+    .btn-file {
+        margin-top: 1rem;
+        margin-bottom: .5rem;
     }
 }
 @media screen and (max-width: 767px) {
-    html {
-        font-size: 33%;
-    }
-    #banner-content {
-        line-height: 11rem;
-    }
-    .popover .popover-title {
-        font-size: 4rem;
-    }
-    .popover .popover-content {
-        font-size: 3.5rem;
-    }
-
-        .media-item div.thumbnail {
-        width: 100%;
-        height: 250px;
-    }
-    img.loading-animation {
-        width: 100%;
-        height: 250px;
-    }
-    div.handle {
-        text-align: center;
-    }
-    div.handle .glyphicon {
-        font-size: 5rem;
-    }
-    i.glyphicon-align-justify {
-        margin: 0px 6rem;
-    }
-    button.row-buttons {
-        font-size: 4rem;
-    }
-    span.btn-file {
-        font-size: 6rem;
+    .media-body {
+        display: none;
     }
 }
 @media screen and (max-width: 450px) {
-    html {
-        font-size: 33%;
-    }
 }
 @media screen and (max-width: 350px) {
-    html {
-        font-size: 33%;
-    }
 }
