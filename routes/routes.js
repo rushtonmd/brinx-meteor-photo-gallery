@@ -38,18 +38,22 @@ Router.map(function() {
             };
             _.each(allItems, function(mediaItem) {
 
+            	var mediaItemDescription = String(mediaItem.description).replace(/(?:\r\n|\r|\n)/g, '<br />');
+            	var mediaItemFileRecord = mediaItem.file ? mediaItem.file.getFileRecord() : {};
+            	var mediaItemWidth = mediaItemFileRecord.metadata ? mediaItemFileRecord.metadata.width : 1;
+            	var mediaItemHeight = mediaItemFileRecord.metadata ? mediaItemFileRecord.metadata.height : 1;
+            	var mediaItemMasterUrl = mediaItemFileRecord.url ? mediaItemFileRecord.url("master") : "";
+            	var mediaItemThumbnailUrl = mediaItemFileRecord.url ? mediaItemFileRecord.url({store: 'thumbnail', auth:false}) : "";
+
                 //var url = mediaItem.file.getFileRecord().url("thumbnail");
                 var mItem = {
                     title: mediaItem.title,
-                    description: mediaItem.description,
+                    description: mediaItemDescription,
                     rank: mediaItem.rank,
-                    width: mediaItem.file.getFileRecord().metadata.width,
-                    height: mediaItem.file.getFileRecord().metadata.height,
-                    masterUrl: mediaItem.file.getFileRecord().url("master"),
-                    thumbnailUrl: mediaItem.file.getFileRecord().url({
-                        store: 'thumbnail',
-                        auth: false
-                    })
+                    width: mediaItemWidth,
+                    height: mediaItemHeight,
+                    masterUrl: mediaItemMasterUrl,
+                    thumbnailUrl: mediaItemThumbnailUrl
                 };
                 returnData.mediaItems.push(mItem);
                 //console.log(url);
