@@ -42,7 +42,7 @@ Router.map(function() {
             	var mediaItemFileRecord = mediaItem.file ? mediaItem.file.getFileRecord() : {};
             	var mediaItemWidth = mediaItemFileRecord.metadata ? mediaItemFileRecord.metadata.width : 1;
             	var mediaItemHeight = mediaItemFileRecord.metadata ? mediaItemFileRecord.metadata.height : 1;
-            	var mediaItemMasterUrl = mediaItemFileRecord.url ? mediaItemFileRecord.url("master") : "";
+            	var mediaItemMasterUrl = mediaItemFileRecord.url ? mediaItemFileRecord.url({store: 'master', auth:false}) : "";
             	var mediaItemThumbnailUrl = mediaItemFileRecord.url ? mediaItemFileRecord.url({store: 'thumbnail', auth:false}) : "";
 
                 //var url = mediaItem.file.getFileRecord().url("thumbnail");

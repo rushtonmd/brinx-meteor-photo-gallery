@@ -45,7 +45,10 @@ if (Meteor.isServer) {
         gm(readStream, fileObj.name())
             .autoOrient().resize(1000).quality(75)
             .stream(function(err, stdout, stderr) {
-                if (err) return err;
+                if (err) {
+                    done();
+                    return err;
+                }
                 stdout.pipe(writeStream);
                 stdout.on('end', done);
             });

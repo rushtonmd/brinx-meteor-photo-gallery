@@ -44,6 +44,7 @@
             $.each(data.mediaItems, function(key, val) {
                 var imageEntry = {};
                 imageEntry.url_n = "//admin.brinkleyrushton.com" + val.thumbnailUrl;
+                imageEntry.url_n_master = "//admin.brinkleyrushton.com" + val.masterUrl;
                 imageEntry.width_n = val.width;
                 imageEntry.height_n = val.height;
                 imageEntry.caption_n = val.description;
@@ -179,7 +180,7 @@
                 var url = photo.url_n;
                 img.popover({
                     title: "Notes...",
-                    content: photo.caption_n,
+                    content: photo.caption_n + '<br/> <a href="' + photo.url_n_master+ '">(full size)</a>' ,
                     placement: "top",
                     html: true
                 });
