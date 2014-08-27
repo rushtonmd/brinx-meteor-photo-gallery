@@ -79,6 +79,20 @@ Template.mediaItems.events({
 
     'click .delete-image': function(event) {
         var mediaID = $(event.currentTarget).attr('media-id');
+        $("button.delete-media-item").attr('media-id', mediaID);
+
+        var newTitle = $("div.media-item[media-id='" + mediaID + "']").find(".media-heading").html();
+        
+        $("#deleteModalLabel span").html(newTitle);
+
+    },
+
+    'click .delete-media-item': function(event) {
+    	// Get the media ID
+        var mediaID = $(event.currentTarget).attr('media-id');
+        
+        console.log("deleting " + mediaID);
+
         $("div.media-item[media-id='" + mediaID + "']").fadeOut(function() {
             MediaItems.update({
                 "_id": mediaID

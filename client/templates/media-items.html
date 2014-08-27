@@ -28,6 +28,7 @@
     </div>
 
     {{>modifyModal}}
+    {{>deleteMediaItemModal}}
 </template>
 
 
@@ -59,7 +60,7 @@
             	<span class="btn btn-info edit-image row-buttons" data-toggle="modal" data-target="#myModal" media-id="{{_id}}">
 			    	<i class="glyphicon glyphicon-pencil"></i>
 				</span>
-            	<span class="btn btn-danger delete-image row-buttons" media-id="{{_id}}">
+            	<span class="btn btn-danger delete-image row-buttons" data-toggle="modal" data-target="#deleteMediaItemModal" media-id="{{_id}}" media-title="{{title}}">
 			    	<i class="glyphicon glyphicon-remove"></i>
 				</span>
             </div>
