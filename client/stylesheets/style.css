@@ -108,13 +108,13 @@ div.handle {
 }
 
 .row-button-container {
-    margin-top: 1rem;
+    float: right;
 }
 
 .row-buttons {
-    width: 100%;
-    margin: 1px 0px;
     font-size: 2.5rem;
+    float: right;
+    margin: 0.5rem;
 }
 .btn-file {
     position: relative;

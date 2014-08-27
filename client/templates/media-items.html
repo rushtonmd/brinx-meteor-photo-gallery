@@ -39,7 +39,7 @@
                 <i class="glyphicon glyphicon-align-justify"></i>
                 <i class="glyphicon glyphicon-chevron-down"></i>
             </div>
-            <div class="col-xs-5 col-sm-3">
+            <div class="col-xs-6 col-sm-3">
             	{{#with image}}
             	{{#if url store="thumbnail"}} {{! if we have a url to the thumbnail store we will display the image}}
                     <div class="thumbnail" style="background-image:url('{{url store="thumbnail"}}')" thumbnail_src="{{url store="thumbnail"}}" full_size_src="{{url store="master"}}" meta_width="{{metadata.width}}" meta_height="{{metadata.height}}"></div>
@@ -55,7 +55,7 @@
                 <h4 class="media-heading">{{title}}</h4>
                 <p>{{description}}</p>
             </div>
-            <div class="col-xs-offset-2 col-xs-3 col-sm-offset-0 col-sm-2 row-button-container">
+            <div class="col-xs-offset-1 col-xs-2 col-sm-offset-0 row-button-container">
             	<span class="btn btn-info edit-image row-buttons" data-toggle="modal" data-target="#myModal" media-id="{{_id}}">
 			    	<i class="glyphicon glyphicon-pencil"></i>
 				</span>
