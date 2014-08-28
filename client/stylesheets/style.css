@@ -91,6 +91,10 @@ img.loading-animation {
     margin: 5px;
 }
 
+.show-more-results {
+    text-align: center;
+}
+
 input.modal-dimension {
     width: auto;
 }
@@ -120,8 +124,8 @@ div.handle {
     position: relative;
     overflow: hidden;
     width: 100%;
-    margin-bottom: 4rem;
-    margin-top: 2rem;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
     font-size: 3rem;
 }
 .btn-file input[type=file] {

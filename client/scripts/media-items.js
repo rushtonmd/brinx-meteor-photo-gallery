@@ -82,7 +82,7 @@ Template.mediaItems.events({
         $("button.delete-media-item").attr('media-id', mediaID);
 
         var newTitle = $("div.media-item[media-id='" + mediaID + "']").find(".media-heading").html();
-        
+
         $("#deleteModalLabel span").html(newTitle);
 
     },
@@ -127,6 +127,37 @@ Template.mediaItem.image = function() {
     //return this.file.getFileRecord();
     return Images.findOne(this.file._id);
 };
+
+Template.mediaItems.moreResults = function() {
+    // If, once the subscription is ready, we have less rows than we
+    // asked for, we've got all the rows in the collection.
+    return !(MediaItems.find().count() < Session.get("itemsLimit"));
+}
+
+// whenever #showMoreResults becomes visible, retrieve more results
+function showMoreVisible() {
+    var threshold, target = $(".show-more-results");
+    if (!target.length) return;
+ 
+    threshold = $(window).scrollTop() + $(window).height() - target.height();
+ 
+    if (target.offset().top < threshold) {
+        if (!target.data("visible")) {
+            // console.log("target became visible (inside viewable area)");
+            target.data("visible", true);
+            Session.set("itemsLimit",
+                Session.get("itemsLimit") + ITEMS_INCREMENT);
+        }
+    } else {
+        if (target.data("visible")) {
+            // console.log("target became invisible (below viewable arae)");
+            target.data("visible", false);
+        }
+    }        
+}
+
+// run the above func every time the user scrolls
+$(window).scroll(showMoreVisible);
 
 
 SimpleRationalRanks = {

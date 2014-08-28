@@ -1,4 +1,5 @@
 <template name="mediaItems">
+	
 	<nav class="navbar navbar-default" role="navigation">
 	  	<div class="container-fluid">
 	    <!-- Brand and toggle get grouped for better mobile display -->
@@ -25,10 +26,16 @@
                 </div>
             </div>
         </div>
+        {{#if moreResults}}
+        <div class="row show-more-results">
+        	<img class="loading-more-images-animation" src="/loading-more-images.gif">
+    	</div>
+    	{{/if}}
     </div>
 
     {{>modifyModal}}
     {{>deleteMediaItemModal}}
+
 </template>
 
 

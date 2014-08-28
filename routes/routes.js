@@ -67,7 +67,7 @@ Router.map(function() {
             this.response.end(EJSON.stringify(returnData));
         }
     });
-    this.route('404', {
-        path: '/*'
-    });
+    // this.route('404', {
+    //     path: '/*'
+    // });
 });

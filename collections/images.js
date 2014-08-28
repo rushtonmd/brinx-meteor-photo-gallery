@@ -43,9 +43,11 @@ Images = new FS.Collection("images", {
 
 
 
-Images.on("stored", Meteor.bindEnvironment(function (f, s) {
-    if (s == 'thumbnail') setImageMetaSize(f,s);
-}, function (e) { console.log('Failed to bind environment:' + e); }));
+Images.on("stored", Meteor.bindEnvironment(function(f, s) {
+    if (s == 'thumbnail') setImageMetaSize(f, s);
+}, function(e) {
+    console.log('Failed to bind environment:' + e);
+}));
 
 
 
@@ -85,18 +87,32 @@ Images.allow({
 //If we're on the server publish the collection, otherwise we are on the client and we should subscribe to the publication.
 if (Meteor.isServer) {
 
-    Meteor.publish('mediaItems', function() {
-        return MediaItems.find({
+    Meteor.publish('mediaItems', function(limit) {
+        return MediaItems.find({}, {
+            'limit': limit,
+            'sort': {
+                rank: -1
+            },
             'deleted': {
                 '$ne': true
             }
         });
     });
+
     Meteor.publish('images', function() {
         return Images.find();
     });
 
 } else {
     Meteor.subscribe('images');
-    Meteor.subscribe('mediaItems');
+
+    ITEMS_INCREMENT = 15;
+    Session.setDefault('itemsLimit', ITEMS_INCREMENT);
+    Deps.autorun(function() {
+        Meteor.subscribe('mediaItems', Session.get('itemsLimit'));
+    });
+
+    // Template.infiniteExample.items = function() {
+    //     return items.find();
+    // }
 }
