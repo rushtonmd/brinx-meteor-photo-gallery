@@ -5,17 +5,15 @@ FS.HTTP.setHeadersForGet([
 
 //Create the master store
 var masterStore = new FS.Store.FileSystem("master", {
-    path: "~/uploads/master"
+    path: "~/uploads/thumbnails"
 });
 
 //Create a thumbnail store
 var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
     path: "~/uploads/thumbnails",
+
     //Create the thumbnail as we save to the store.
     transformWrite: function(fileObj, readStream, writeStream) {
-        /* Use graphicsmagick to create a 300x300 square thumbnail at 100% quality,
-         * orient according to EXIF data if necessary and then save by piping to the
-         * provided writeStream */
         createThumbnailImage(fileObj, readStream, writeStream);
 
     }
@@ -55,10 +53,10 @@ MediaItems = new Meteor.Collection('mediaItems');
 
 MediaItems.allow({
     insert: function(userId, file) {
-        return true;
+        return false;
     },
     update: function(userId, file, fields, modifier) {
-        return true;
+        return false;
     },
     remove: function(userId, file) {
         return false;
@@ -69,10 +67,10 @@ MediaItems.allow({
 //Use allow to control insert, update, remove and download. In this case we will just allow them all.
 Images.allow({
     insert: function(userId, file) {
-        return true;
+        return userId;
     },
     update: function(userId, file, fields, modifier) {
-        return true;
+        return false;
     },
     remove: function(userId, file) {
         return false;
@@ -82,20 +80,92 @@ Images.allow({
     }
 });
 
-
-
 //If we're on the server publish the collection, otherwise we are on the client and we should subscribe to the publication.
 if (Meteor.isServer) {
 
+    Meteor.methods({
+        // options should include: title, description, x, y, public
+        createMediaItem: function(imageFile) {
+
+            // Ensure user is logged in 
+            if (!this.userId) return;
+
+
+            MediaItems.insert({
+                title: imageFile.getFileRecord().name(),
+                description: '(no description)',
+                rank: new Date().getTime(),
+                file: imageFile
+            });
+        },
+
+        updateMediaItem: function(options) {
+
+            // Ensure user is logged in 
+            if (!this.userId) return;
+
+            MediaItems.update({
+                "_id": options.mediaID
+            }, {
+                $set: {
+                    "description": options.newDescription,
+                    "title": options.newTitle
+                }
+            });
+
+            var imageID = MediaItems.findOne({
+                "_id": options.mediaID
+            }).file._id;
+
+            Images.update({
+                "_id": imageID
+            }, {
+                $set: {
+                    'metadata.width': options.newWidth,
+                    'metadata.height': options.newHeight
+                }
+            });
+        },
+
+
+        deleteMediaItem: function(mediaID) {
+
+            // Ensure user is logged in 
+            if (!this.userId) return;
+
+            MediaItems.update({
+                "_id": mediaID
+            }, {
+                $set: {
+                    "deleted": true
+                }
+            });
+        },
+
+        setNewOrderOnMediaItem: function(mediaID, newRank) {
+
+            // Ensure user is logged in 
+            if (!this.userId) return;
+
+            MediaItems.update(mediaID, {
+                $set: {
+                    rank: newRank
+                }
+            });
+        }
+    });
+
     Meteor.publish('mediaItems', function(limit) {
-        return MediaItems.find({}, {
-            'limit': limit,
-            'sort': {
-                rank: -1
-            },
+        return MediaItems.find({
             'deleted': {
                 '$ne': true
             }
+        }, {
+            'limit': limit,
+            'sort': {
+                rank: -1
+            }
+
         });
     });
 
@@ -108,11 +178,9 @@ if (Meteor.isServer) {
 
     ITEMS_INCREMENT = 15;
     Session.setDefault('itemsLimit', ITEMS_INCREMENT);
+
     Deps.autorun(function() {
         Meteor.subscribe('mediaItems', Session.get('itemsLimit'));
     });
 
-    // Template.infiniteExample.items = function() {
-    //     return items.find();
-    // }
 }

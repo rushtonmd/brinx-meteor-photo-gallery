@@ -1,16 +1,10 @@
 Template.mediaItems.events({
     'change #fileInput': function(event) {
+
         FS.Utility.eachFile(event, function(file) {
-            var insertedPhoto = Images.insert(file, function(err, fileObj) {
-                //Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-                //var readStream = fileObj.createReadStream('master');
-                //SetImageSize(insertedPhoto);
-            });
-            MediaItems.insert({
-                title: insertedPhoto.name(),
-                description: '(no description)',
-                rank: new Date().getTime(),
-                file: insertedPhoto
+
+            Images.insert(file, function(err, fileObj) {
+            	Meteor.call('createMediaItem', fileObj);
             });
 
         });
@@ -27,33 +21,14 @@ Template.mediaItems.events({
 
     'click .save-changes-to-media': function(event) {
 
-        var mediaID = $("button.save-changes-to-media").attr('media-id');
-        var newDescription = $(".modal-body .media-description").val();
-        var newTitle = $(".modal-header .media-title").val();
-        var newWidth = $("input.image-width").val();
-        var newHeight = $("input.image-height").val();
+    	var options = {};
+        options.mediaID = $("button.save-changes-to-media").attr('media-id');
+        options.newDescription = $(".modal-body .media-description").val();
+        options.newTitle = $(".modal-header .media-title").val();
+        options.newWidth = $("input.image-width").val();
+        options.newHeight = $("input.image-height").val();
 
-        MediaItems.update({
-            "_id": mediaID
-        }, {
-            $set: {
-                "description": newDescription,
-                "title": newTitle
-            }
-        });
-
-        var imageID = MediaItems.findOne({
-            "_id": mediaID
-        }).file._id;
-
-        Images.update({
-            "_id": imageID
-        }, {
-            $set: {
-                'metadata.width': newWidth,
-                'metadata.height': newHeight
-            }
-        });
+        Meteor.call('updateMediaItem', options);
 
         $('#myModal').modal('hide');
     },
@@ -90,32 +65,23 @@ Template.mediaItems.events({
     'click .delete-media-item': function(event) {
     	// Get the media ID
         var mediaID = $(event.currentTarget).attr('media-id');
+
+
         
         console.log("deleting " + mediaID);
 
         $("div.media-item[media-id='" + mediaID + "']").fadeOut(function() {
-            MediaItems.update({
-                "_id": mediaID
-            }, {
-                $set: {
-                    "deleted": true
-                }
-            });
+        	Meteor.call('deleteMediaItem', mediaID);
         });
 
     }
 
 });
 
-// Template.images.images = function() {
-//     return Images.find({}, {
-//         sort: {
-//             rank: -1
-//         }
-//     });
-// };
 
 Template.mediaItems.mediaItems = function() {
+	// We need to sort on the client side so that the newest item is inserted
+	// and shows at the top of the list prior to syncing with the server
     return MediaItems.find({}, {
         sort: {
             rank: -1
@@ -196,12 +162,8 @@ Template.mediaItems.rendered = function() {
                     UI.getElementData(after).rank);
             }
 
-            console.log(newRank);
-            MediaItems.update(UI.getElementData(el)._id, {
-                $set: {
-                    rank: newRank
-                }
-            });
+            Meteor.call('setNewOrderOnMediaItem', UI.getElementData(el)._id, newRank);
+
         }
     });
 };
