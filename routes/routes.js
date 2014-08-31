@@ -4,7 +4,6 @@ Router.map(function() {
         onBeforeAction: function(pause) {
             // render the login template but keep the url in the browser the same
             AccountsEntry.signInRequired(this);
-            brinx.stopScrolling();
         }
     });
     this.route('allGalleryMediaItems', { 
