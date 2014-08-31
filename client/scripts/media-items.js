@@ -4,7 +4,7 @@ Template.mediaItems.events({
         FS.Utility.eachFile(event, function(file) {
 
             Images.insert(file, function(err, fileObj) {
-            	Meteor.call('createMediaItem', fileObj);
+                Meteor.call('createMediaItem', fileObj);
             });
 
         });
@@ -21,7 +21,7 @@ Template.mediaItems.events({
 
     'click .save-changes-to-media': function(event) {
 
-    	var options = {};
+        var options = {};
         options.mediaID = $("button.save-changes-to-media").attr('media-id');
         options.newDescription = $(".modal-body .media-description").val();
         options.newTitle = $(".modal-header .media-title").val();
@@ -63,15 +63,15 @@ Template.mediaItems.events({
     },
 
     'click .delete-media-item': function(event) {
-    	// Get the media ID
+        // Get the media ID
         var mediaID = $(event.currentTarget).attr('media-id');
 
 
-        
+
         console.log("deleting " + mediaID);
 
         $("div.media-item[media-id='" + mediaID + "']").fadeOut(function() {
-        	Meteor.call('deleteMediaItem', mediaID);
+            Meteor.call('deleteMediaItem', mediaID);
         });
 
     }
@@ -80,8 +80,8 @@ Template.mediaItems.events({
 
 
 Template.mediaItems.mediaItems = function() {
-	// We need to sort on the client side so that the newest item is inserted
-	// and shows at the top of the list prior to syncing with the server
+    // We need to sort on the client side so that the newest item is inserted
+    // and shows at the top of the list prior to syncing with the server
     return MediaItems.find({}, {
         sort: {
             rank: -1
@@ -100,31 +100,29 @@ Template.mediaItems.moreResults = function() {
     return !(MediaItems.find().count() < Session.get("itemsLimit"));
 }
 
+
+// Every 3 seconds, see if more items need to be loaded.
+// We could do this based on scroll, but for mobile browsers it doesn't work so hawt.
+$(function() {
+    setInterval(function() {
+        showMoreVisible();
+    }, 3000);
+});
+
 // whenever #showMoreResults becomes visible, retrieve more results
 function showMoreVisible() {
     var threshold, target = $(".show-more-results");
     if (!target.length) return;
- 
-    threshold = $(window).scrollTop() + $(window).height() - target.height();
- 
+
+    threshold = $(window).scrollTop() + $(window).height();
+
     if (target.offset().top < threshold) {
-        if (!target.data("visible")) {
-            // console.log("target became visible (inside viewable area)");
-            target.data("visible", true);
-            Session.set("itemsLimit",
-                Session.get("itemsLimit") + ITEMS_INCREMENT);
-        }
-    } else {
-        if (target.data("visible")) {
-            // console.log("target became invisible (below viewable arae)");
-            target.data("visible", false);
-        }
-    }        
-}
 
-// run the above func every time the user scrolls
-$(window).scroll(showMoreVisible);
+        // Increase the number of items returned
+        Session.set("itemsLimit", Session.get("itemsLimit") + ITEMS_INCREMENT);
+    };
 
+};
 
 SimpleRationalRanks = {
     beforeFirst: function(firstRank) {
