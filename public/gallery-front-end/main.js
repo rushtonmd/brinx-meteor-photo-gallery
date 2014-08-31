@@ -5,6 +5,7 @@
     var scrollSpeed = 30;
     var pauseDuration = 4000;
     var pauseThisTime = pauseDuration;
+    var currentWidth = 0;
     brinx.imageList = [];
 
     $(function() {
@@ -12,14 +13,26 @@
         scrollWindow();
     });
 
-    function showImageCaption() {
-        alert("Handler for .click() called.");
-    };
-
     $(window).resize(function() {
-        var imageRowDiv = $("#image-container").empty();
-        loadAllImages(brinx.imageList);
+
+        // Only refresh the image list if the width of the screen has changed.
+        if (hasWidthChanged()) {
+
+            var imageRowDiv = $("#image-container").empty();
+            loadAllImages(brinx.imageList);
+        };
     });
+
+    function hasWidthChanged() {
+
+        var imageRowDiv = $("#image-container").eq(0);
+        var targetWidth = imageRowDiv.innerWidth();
+
+        if (currentWidth != targetWidth){
+            currentWidth = targetWidth;
+            return true;
+        };
+    };
 
     function scrollWindow() {
         if (window.pageYOffset != currentPosition) {
@@ -180,7 +193,7 @@
                 var url = photo.url_n;
                 img.popover({
                     title: "Notes...",
-                    content: photo.caption_n + '<br/> <a href="' + photo.url_n_master+ '">(full size)</a>' ,
+                    content: photo.caption_n + '<br/> <a href="' + photo.url_n_master + '">(full size)</a>',
                     placement: "top",
                     html: true
                 });

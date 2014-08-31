@@ -312,8 +312,8 @@ FS = {
             "VelocityAggregateReports": function emptyFn () {},
             "VelocityLogs": function emptyFn () {},
             "VelocityMirrors": function emptyFn () {},
-            "mediaItems": function emptyFn () {},
-            "images": function emptyFn () {}
+            "images": function emptyFn () {},
+            "mediaItems": function emptyFn () {}
           },
           "universal_publish_handlers": {
             "0": function emptyFn () {}
@@ -565,8 +565,8 @@ FS = {
           "VelocityAggregateReports": function emptyFn () {},
           "VelocityLogs": function emptyFn () {},
           "VelocityMirrors": function emptyFn () {},
-          "mediaItems": function emptyFn () {},
-          "images": function emptyFn () {}
+          "images": function emptyFn () {},
+          "mediaItems": function emptyFn () {}
         },
         "universal_publish_handlers": {
           "0": function emptyFn () {}
@@ -794,7 +794,7 @@ FS = {
     "listeners": function emptyFn () {}
   },
   "HTTP": {
-    "uploadUrl": "/cfs/files",
+    "uploadUrl": "/depository/files",
     "setBaseUrl": function emptyFn () {},
     "setHeadersForGet": function emptyFn () {},
     "publish": function emptyFn () {},
@@ -1129,8 +1129,8 @@ Queue = {
         "VelocityAggregateReports": function emptyFn () {},
         "VelocityLogs": function emptyFn () {},
         "VelocityMirrors": function emptyFn () {},
-        "mediaItems": function emptyFn () {},
-        "images": function emptyFn () {}
+        "images": function emptyFn () {},
+        "mediaItems": function emptyFn () {}
       },
       "universal_publish_handlers": {
         "0": function emptyFn () {}
@@ -1330,8 +1330,8 @@ Queue = {
         "VelocityAggregateReports": function emptyFn () {},
         "VelocityLogs": function emptyFn () {},
         "VelocityMirrors": function emptyFn () {},
-        "mediaItems": function emptyFn () {},
-        "images": function emptyFn () {}
+        "images": function emptyFn () {},
+        "mediaItems": function emptyFn () {}
       },
       "universal_publish_handlers": {
         "0": function emptyFn () {}

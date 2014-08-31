@@ -1,11 +1,4 @@
 Router.map(function() {
-    // this.route('gallery', {
-    //     path: '/',
-    //     onBeforeAction: function(pause) {
-    //         brinx.retrieveImagesListAPI();
-    //         brinx.startScrolling();
-    //     }
-    // });
     this.route('mediaItems', {
         path: '/',
         onBeforeAction: function(pause) {
@@ -14,10 +7,17 @@ Router.map(function() {
             brinx.stopScrolling();
         }
     });
-    this.route('methodExample', { //TODO Add allow methods of GET only : Access-Control-Allow-Methods : if(this.request.method == 'GET') {
+    this.route('allGalleryMediaItems', { 
         path: '/api/media-items',
         where: 'server',
         action: function() {
+
+        	// Reject anything but GET request
+            if (this.request.method != 'GET') {
+                this.response.end("Nope.");
+                return 0;
+            };
+
             // GET, POST, PUT, DELETE
             var requestMethod = this.request.method;
             // Data from a POST request
@@ -38,12 +38,18 @@ Router.map(function() {
             };
             _.each(allItems, function(mediaItem) {
 
-            	var mediaItemDescription = String(mediaItem.description).replace(/(?:\r\n|\r|\n)/g, '<br />');
-            	var mediaItemFileRecord = mediaItem.file ? mediaItem.file.getFileRecord() : {};
-            	var mediaItemWidth = mediaItemFileRecord.metadata ? mediaItemFileRecord.metadata.width : 1;
-            	var mediaItemHeight = mediaItemFileRecord.metadata ? mediaItemFileRecord.metadata.height : 1;
-            	var mediaItemMasterUrl = mediaItemFileRecord.url ? mediaItemFileRecord.url({store: 'master', auth:false}) : "";
-            	var mediaItemThumbnailUrl = mediaItemFileRecord.url ? mediaItemFileRecord.url({store: 'thumbnail', auth:false}) : "";
+                var mediaItemDescription = String(mediaItem.description).replace(/(?:\r\n|\r|\n)/g, '<br />');
+                var mediaItemFileRecord = mediaItem.file ? mediaItem.file.getFileRecord() : {};
+                var mediaItemWidth = mediaItemFileRecord.metadata ? mediaItemFileRecord.metadata.width : 1;
+                var mediaItemHeight = mediaItemFileRecord.metadata ? mediaItemFileRecord.metadata.height : 1;
+                var mediaItemMasterUrl = mediaItemFileRecord.url ? mediaItemFileRecord.url({
+                    store: 'master',
+                    auth: false
+                }) : "";
+                var mediaItemThumbnailUrl = mediaItemFileRecord.url ? mediaItemFileRecord.url({
+                    store: 'thumbnail',
+                    auth: false
+                }) : "";
 
                 //var url = mediaItem.file.getFileRecord().url("thumbnail");
                 var mItem = {

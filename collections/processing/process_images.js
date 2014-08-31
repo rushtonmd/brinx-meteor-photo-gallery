@@ -1,26 +1,30 @@
 if (Meteor.isServer) {
 
-    ImageProcessingQueue = new PowerQueue({
-        isPaused: false
+    var imageProcessingQueue = new PowerQueue({
+        autotart: true
     });
-
-    ImageProcessingQueue.run();
 
     createThumbnailImage = function(fileObj, readStream, writeStream) {
 
-        ImageProcessingQueue.add(function(done) {
+        fileObj.isUploaded = true;
+
+        imageProcessingQueue.add(function(done) {
             var moreDone = Meteor.bindEnvironment(function() {
                 done();
             }, function(e) {
                 throw e;
             });
+
             useGMToCreateThumbnail(moreDone, fileObj, readStream, writeStream);
+
         });
 
     };
 
-    setImageMetaSize = function(fileObj, store){
+    setImageMetaSize = function(fileObj, store) {
+
         var readStream = fileObj.createReadStream('thumbnail');
+
         gm(readStream)
             .size({
                 bufferStream: true
@@ -53,8 +57,5 @@ if (Meteor.isServer) {
                 stdout.on('end', done);
             });
     };
-
-
-
 
 }
