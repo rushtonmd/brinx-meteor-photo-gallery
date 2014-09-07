@@ -1,26 +1,17 @@
-//Set Cache Control headers so we don't overload our meteor server with http requests
-FS.HTTP.setHeadersForGet([
-    ['Cache-Control', 'public, max-age=31536000']
-]);
-
-// Set the base URL for file: http://domain.com/baseURL/files/images/
-// I used 'depository' because... well who knows.
-FS.HTTP.setBaseUrl('/depository');
 
 
 //Create the master store
 var masterStore = new FS.Store.FileSystem("master", {
-    path: "~/uploads/thumbnails"
+    path: fileStoreImagePath
 });
 
 //Create a thumbnail store
 var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
-    path: "~/uploads/thumbnails",
+    path: fileStoreImagePath,
 
     //Create the thumbnail as we save to the store.
     transformWrite: function(fileObj, readStream, writeStream) {
         createThumbnailImage(fileObj, readStream, writeStream);
-
     }
 });
 

@@ -101,13 +101,8 @@ if (Meteor.isServer) {
         });
     });
 
-    // Meteor.publish('images', function() {
-    //     return Images.find();
-    // });
-
 } else {
-    // Meteor.subscribe('images');
-
+    
     ITEMS_INCREMENT = 15;
 
     Session.setDefault('itemsLimit', ITEMS_INCREMENT);

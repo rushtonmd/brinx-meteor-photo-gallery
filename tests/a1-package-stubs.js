@@ -4,7 +4,7 @@
 //
 AccountsEntry = {
   "settings": {
-    "signupCode": "brinkley"
+    "signupCode": "12345"
   },
   "config": function emptyFn () {}
 };

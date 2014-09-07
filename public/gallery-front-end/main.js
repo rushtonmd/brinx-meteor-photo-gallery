@@ -6,6 +6,7 @@
     var pauseDuration = 4000;
     var pauseThisTime = pauseDuration;
     var currentWidth = 0;
+    var initialPause = true;
     brinx.imageList = [];
 
     $(function() {
@@ -35,7 +36,7 @@
     };
 
     function scrollWindow() {
-        if (window.pageYOffset != currentPosition) {
+        if (initialPause || window.pageYOffset != currentPosition) {
             pauseThisTime = pauseDuration;
             currentPosition = window.pageYOffset;
         } else {
@@ -43,6 +44,8 @@
             currentPosition = currentPosition + scrollAmount;
             pauseThisTime = 0;
         }
+
+        initialPause = false;
 
         setTimeout(function() {
             scrollWindow();
