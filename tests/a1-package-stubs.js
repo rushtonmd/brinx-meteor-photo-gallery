@@ -1,16 +1,5 @@
 
 ////////////////////////////////////////////////////////////
-// AccountsEntry
-//
-AccountsEntry = {
-  "settings": {
-    "signupCode": "12345"
-  },
-  "config": function emptyFn () {}
-};
-
-
-////////////////////////////////////////////////////////////
 // T9n
 //
 T9n = function emptyFn () {};
@@ -311,9 +300,7 @@ FS = {
             "VelocityTestReports": function emptyFn () {},
             "VelocityAggregateReports": function emptyFn () {},
             "VelocityLogs": function emptyFn () {},
-            "VelocityMirrors": function emptyFn () {},
-            "images": function emptyFn () {},
-            "mediaItems": function emptyFn () {}
+            "VelocityMirrors": function emptyFn () {}
           },
           "universal_publish_handlers": {
             "0": function emptyFn () {}
@@ -376,16 +363,7 @@ FS = {
             "/cfs._tempstore.chunks/remove": function emptyFn () {},
             "/cfs.images.filerecord/insert": function emptyFn () {},
             "/cfs.images.filerecord/update": function emptyFn () {},
-            "/cfs.images.filerecord/remove": function emptyFn () {},
-            "/mediaItems/insert": function emptyFn () {},
-            "/mediaItems/update": function emptyFn () {},
-            "/mediaItems/remove": function emptyFn () {},
-            "createMediaItem": function emptyFn () {},
-            "updateMediaItem": function emptyFn () {},
-            "deleteMediaItem": function emptyFn () {},
-            "setNewOrderOnMediaItem": function emptyFn () {},
-            "entryValidateSignupCode": function emptyFn () {},
-            "entryCreateUser": function emptyFn () {}
+            "/cfs.images.filerecord/remove": function emptyFn () {}
           },
           "sessions": {},
           "stream_server": {
@@ -447,32 +425,26 @@ FS = {
         "_name": "cfs.images.filerecord",
         "_validators": {
           "insert": {
-            "allow": {
-              "0": function emptyFn () {}
-            },
+            "allow": {},
             "deny": {
               "0": function emptyFn () {}
             }
           },
           "update": {
-            "allow": {
-              "0": function emptyFn () {}
-            },
+            "allow": {},
             "deny": {
               "0": function emptyFn () {}
             }
           },
           "remove": {
-            "allow": {
-              "0": function emptyFn () {}
-            },
+            "allow": {},
             "deny": {}
           },
           "upsert": {
             "allow": {},
             "deny": {}
           },
-          "fetch": null
+          "fetch": {}
         },
         "_prefix": "/cfs.images.filerecord/",
         "_getFindSelector": function emptyFn () {},
@@ -498,16 +470,12 @@ FS = {
       },
       "_validators": {
         "download": {
-          "allow": {
-            "0": function emptyFn () {}
-          },
+          "allow": {},
           "deny": {}
         }
       },
       "domain": null,
-      "_events": {
-        "stored": function emptyFn () {}
-      },
+      "_events": {},
       "_maxListeners": 10,
       "insert": function emptyFn () {},
       "update": function emptyFn () {},
@@ -534,9 +502,7 @@ FS = {
   "TempStore": {
     "domain": null,
     "_events": {
-      "progress": function emptyFn () {},
-      "stored": function emptyFn () {},
-      "error": function emptyFn () {}
+      "progress": function emptyFn () {}
     },
     "_maxListeners": 10,
     "Tracker": {
@@ -564,9 +530,7 @@ FS = {
           "VelocityTestReports": function emptyFn () {},
           "VelocityAggregateReports": function emptyFn () {},
           "VelocityLogs": function emptyFn () {},
-          "VelocityMirrors": function emptyFn () {},
-          "images": function emptyFn () {},
-          "mediaItems": function emptyFn () {}
+          "VelocityMirrors": function emptyFn () {}
         },
         "universal_publish_handlers": {
           "0": function emptyFn () {}
@@ -629,16 +593,7 @@ FS = {
           "/cfs._tempstore.chunks/remove": function emptyFn () {},
           "/cfs.images.filerecord/insert": function emptyFn () {},
           "/cfs.images.filerecord/update": function emptyFn () {},
-          "/cfs.images.filerecord/remove": function emptyFn () {},
-          "/mediaItems/insert": function emptyFn () {},
-          "/mediaItems/update": function emptyFn () {},
-          "/mediaItems/remove": function emptyFn () {},
-          "createMediaItem": function emptyFn () {},
-          "updateMediaItem": function emptyFn () {},
-          "deleteMediaItem": function emptyFn () {},
-          "setNewOrderOnMediaItem": function emptyFn () {},
-          "entryValidateSignupCode": function emptyFn () {},
-          "entryCreateUser": function emptyFn () {}
+          "/cfs.images.filerecord/remove": function emptyFn () {}
         },
         "sessions": {},
         "stream_server": {
@@ -739,45 +694,7 @@ FS = {
       "_validatedUpdate": function emptyFn () {},
       "_validatedRemove": function emptyFn () {}
     },
-    "Storage": {
-      "mongoUrl": "mongodb://127.0.0.1:3001/meteor",
-      "mongoOptions": {
-        "db": {},
-        "server": {}
-      },
-      "name": "_tempstore",
-      "typeName": "storage.gridfs",
-      "adapter": {
-        "fileKey": function emptyFn () {},
-        "createReadStreamForFileKey": function emptyFn () {},
-        "createReadStream": function emptyFn () {},
-        "createWriteStreamForFileKey": function emptyFn () {},
-        "createWriteStream": function emptyFn () {},
-        "remove": function emptyFn () {}
-      },
-      "_removeAsync": function emptyFn () {},
-      "remove": function emptyFn () {},
-      "_transform": {
-        "storage": {
-          "fileKey": function emptyFn () {},
-          "createReadStreamForFileKey": function emptyFn () {},
-          "createReadStream": function emptyFn () {},
-          "createWriteStreamForFileKey": function emptyFn () {},
-          "createWriteStream": function emptyFn () {},
-          "remove": function emptyFn () {}
-        },
-        "createWriteStream": function emptyFn () {},
-        "createReadStream": function emptyFn () {}
-      },
-      "setMaxListeners": function emptyFn () {},
-      "emit": function emptyFn () {},
-      "addListener": function emptyFn () {},
-      "on": function emptyFn () {},
-      "once": function emptyFn () {},
-      "removeListener": function emptyFn () {},
-      "removeAllListeners": function emptyFn () {},
-      "listeners": function emptyFn () {}
-    },
+    "Storage": null,
     "exists": function emptyFn () {},
     "listParts": function emptyFn () {},
     "removeFile": function emptyFn () {},
@@ -1128,9 +1045,7 @@ Queue = {
         "VelocityTestReports": function emptyFn () {},
         "VelocityAggregateReports": function emptyFn () {},
         "VelocityLogs": function emptyFn () {},
-        "VelocityMirrors": function emptyFn () {},
-        "images": function emptyFn () {},
-        "mediaItems": function emptyFn () {}
+        "VelocityMirrors": function emptyFn () {}
       },
       "universal_publish_handlers": {
         "0": function emptyFn () {}
@@ -1193,16 +1108,7 @@ Queue = {
         "/cfs._tempstore.chunks/remove": function emptyFn () {},
         "/cfs.images.filerecord/insert": function emptyFn () {},
         "/cfs.images.filerecord/update": function emptyFn () {},
-        "/cfs.images.filerecord/remove": function emptyFn () {},
-        "/mediaItems/insert": function emptyFn () {},
-        "/mediaItems/update": function emptyFn () {},
-        "/mediaItems/remove": function emptyFn () {},
-        "createMediaItem": function emptyFn () {},
-        "updateMediaItem": function emptyFn () {},
-        "deleteMediaItem": function emptyFn () {},
-        "setNewOrderOnMediaItem": function emptyFn () {},
-        "entryValidateSignupCode": function emptyFn () {},
-        "entryCreateUser": function emptyFn () {}
+        "/cfs.images.filerecord/remove": function emptyFn () {}
       },
       "sessions": {},
       "stream_server": {
@@ -1329,9 +1235,7 @@ Queue = {
         "VelocityTestReports": function emptyFn () {},
         "VelocityAggregateReports": function emptyFn () {},
         "VelocityLogs": function emptyFn () {},
-        "VelocityMirrors": function emptyFn () {},
-        "images": function emptyFn () {},
-        "mediaItems": function emptyFn () {}
+        "VelocityMirrors": function emptyFn () {}
       },
       "universal_publish_handlers": {
         "0": function emptyFn () {}
@@ -1394,16 +1298,7 @@ Queue = {
         "/cfs._tempstore.chunks/remove": function emptyFn () {},
         "/cfs.images.filerecord/insert": function emptyFn () {},
         "/cfs.images.filerecord/update": function emptyFn () {},
-        "/cfs.images.filerecord/remove": function emptyFn () {},
-        "/mediaItems/insert": function emptyFn () {},
-        "/mediaItems/update": function emptyFn () {},
-        "/mediaItems/remove": function emptyFn () {},
-        "createMediaItem": function emptyFn () {},
-        "updateMediaItem": function emptyFn () {},
-        "deleteMediaItem": function emptyFn () {},
-        "setNewOrderOnMediaItem": function emptyFn () {},
-        "entryValidateSignupCode": function emptyFn () {},
-        "entryCreateUser": function emptyFn () {}
+        "/cfs.images.filerecord/remove": function emptyFn () {}
       },
       "sessions": {},
       "stream_server": {

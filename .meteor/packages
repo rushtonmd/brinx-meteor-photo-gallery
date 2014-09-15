@@ -2,27 +2,18 @@
 #
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
-
 standard-app-packages
-collectionFS
-cfs-gridfs
-cfs-filesystem
-cfs-graphicsmagick
-bootstrap-3
-cfs-ejson-file
-jquery-ui-bootstrap
-jquery-ui
-http
-jquery-ui-touch-punch
-iron-router
-accounts-ui-bootstrap-3
-accounts-password
-accounts-entry
-queue
-power-queue
-velocity-quick-start
+cfs:standard-packages
+cfs:gridfs
+cfs:reactive-list
+cfs:micro-queue
+cfs:power-queue
+cfs:filesystem
+iron:router
+joshowens:accounts-entry
+ian:accounts-ui-bootstrap-3
+pinglamb:bootstrap3
+cfs:graphicsmagick
+mizzao:jquery-ui
+cfs:tempstore
 
-jasmine-unit
-mocha-web-velocity
-jasmine
-velocity-html-reporter

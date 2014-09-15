@@ -1,3 +1,12 @@
+//Set Cache Control headers so we don't overload our meteor server with http requests
+FS.HTTP.setHeadersForGet([
+    ['Cache-Control', 'public, max-age=31536000']
+    
+]);
+
+// Set the base URL for file: http://domain.com/baseURL/files/images/
+// I used 'depository' because... well who knows.
+FS.HTTP.setBaseUrl('/depository');
 
 
 //Create the master store
@@ -36,15 +45,7 @@ Images = new FS.Collection("images", {
 });
 
 
-// After the thumbnail image is stored, add the height and width to the metadata
-Images.on("stored", Meteor.bindEnvironment(function(f, s) {
-    if (s == 'thumbnail') setImageMetaSize(f, s);
-}, function(e) {
-    console.log('Failed to bind environment:' + e);
-}));
-
-
-// Only allow Insert for logged in users, deny everything else.
+// Only allow inserting of images from a logged in user
 Images.allow({
     insert: function(userId, file) {
         return userId;

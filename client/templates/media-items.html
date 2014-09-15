@@ -49,7 +49,7 @@
             </div>
             <div class="col-xs-offset-1 col-xs-6 col-sm-offset-0 col-sm-3">
             	{{#with image}}
-            	{{#if url store="thumbnail"}} {{! if we have a url to the thumbnail store we will display the image}}
+            	{{#if thumbnailReady}} {{! if we have a url to the thumbnail store we will display the image}}
                     <div class="thumbnail" style="background-image:url('{{url store="thumbnail"}}')" thumbnail_src="{{url store="thumbnail"}}" full_size_src="{{url store="master"}}" meta_width="{{metadata.width}}" meta_height="{{metadata.height}}"></div>
 
 				{{else}} {{! Since we are do not have a url lets show a placeholder image}}

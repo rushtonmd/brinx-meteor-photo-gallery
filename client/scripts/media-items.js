@@ -1,12 +1,12 @@
 Template.mediaItems.events({
-    'change #fileInput': function(event) {
+    'change #fileInput': function(event, template) {
 
         FS.Utility.eachFile(event, function(file) {
-
+            console.log("Adding file!");
             Images.insert(file, function(err, fileObj) {
-                Meteor.call('createMediaItem', fileObj);
+                console.log("Added image " + fileObj.name());
+                Meteor.call('createMediaItem', {name: fileObj.name(), _id: fileObj._id});
             });
-
         });
 
     },
@@ -78,6 +78,13 @@ Template.mediaItems.events({
 
 });
 
+Template.mediaItem.helpers({
+    thumbnailReady: function() {
+        // Determine if the thumbnail has indeed been fully created
+        return this.isUploaded() && this.url({store: 'thumbnail'}) && (typeof this.metadata != 'undefined') && this.metadata.finishedProcessing;
+    },
+});
+
 
 Template.mediaItems.mediaItems = function() {
     // We need to sort on the client side so that the newest item is inserted
@@ -90,8 +97,10 @@ Template.mediaItems.mediaItems = function() {
 };
 
 Template.mediaItem.image = function() {
-    //return this.file.getFileRecord();
-    return Images.findOne(this.file._id);
+    // backwards compatability 
+    var fileID = this.imageID || this.file._id;
+
+    return Images.findOne(fileID);
 };
 
 Template.mediaItems.moreResults = function() {

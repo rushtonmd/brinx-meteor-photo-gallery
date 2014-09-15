@@ -16,18 +16,18 @@ MediaItems.allow({
 if (Meteor.isServer) {
 
     Meteor.methods({
-        // options should include: title, description, x, y, public
+        // Create a new media item with an image file ID 
         createMediaItem: function(imageFile) {
 
             // Ensure user is logged in 
             if (!this.userId) return;
-
-
+ 
+            
             MediaItems.insert({
-                title: imageFile.getFileRecord().name(),
+                title: imageFile.name,
                 description: '(no description)',
                 rank: new Date().getTime(),
-                file: imageFile
+                imageID: imageFile._id
             });
         },
 
@@ -102,7 +102,7 @@ if (Meteor.isServer) {
     });
 
 } else {
-    
+
     ITEMS_INCREMENT = 15;
 
     Session.setDefault('itemsLimit', ITEMS_INCREMENT);
