@@ -47,7 +47,7 @@ if (Meteor.isServer) {
 
             var imageID = MediaItems.findOne({
                 "_id": options.mediaID
-            }).file._id;
+            }).imageID;
 
             Images.update({
                 "_id": imageID

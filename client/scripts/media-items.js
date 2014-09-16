@@ -3,7 +3,6 @@ Template.mediaItems.events({
 
         FS.Utility.eachFile(event, function(file) {
             Images.insert(file, function(err, fileObj) {
-                console.log(err);
                 if (err) throw err;
                 Meteor.call('createMediaItem', {name: fileObj.name(), _id: fileObj._id});
             });
@@ -80,6 +79,11 @@ Template.mediaItem.helpers({
         return this.isUploaded() && this.url({store: 'thumbnail'}) && (typeof this.metadata != 'undefined') && this.metadata.finishedProcessing;
     },
 });
+
+
+Template.mediaItems.created = function(){
+    Meteor.Loader.loadJs("/external-libraries/jquery.ui.touch-punch.min.js");
+};
 
 
 Template.mediaItems.mediaItems = function() {

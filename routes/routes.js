@@ -38,7 +38,10 @@ Router.map(function() {
             _.each(allItems, function(mediaItem) {
 
                 var mediaItemDescription = String(mediaItem.description).replace(/(?:\r\n|\r|\n)/g, '<br />');
-                var mediaItemFileRecord = mediaItem.file ? mediaItem.file.getFileRecord() : {};
+
+                var mediaItemFileRecord = Images.findOne(mediaItem.imageID);
+
+
                 var mediaItemWidth = mediaItemFileRecord.metadata ? mediaItemFileRecord.metadata.width : 1;
                 var mediaItemHeight = mediaItemFileRecord.metadata ? mediaItemFileRecord.metadata.height : 1;
                 var mediaItemMasterUrl = mediaItemFileRecord.url ? mediaItemFileRecord.url({

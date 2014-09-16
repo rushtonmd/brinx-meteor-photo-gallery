@@ -20,17 +20,17 @@ if (Meteor.isServer) {
 
         imageProcessingQueue.add(function(done) {
             var moreDone = Meteor.bindEnvironment(function(err) {
-                if(err) {
+                if (err) {
                     console.log("Error in processing: " + err);
                     done();
-                } else{
+                } else {
                     // Once the thumbnail has finished processing, 
                     // set the metadata sizes and set the flag
                     // to alert the front end that the image
                     // has finished processing
                     setImageMetaSize(done, fileObj, 'thumbnail');
                 }
-                
+
             }, function(e) {
                 throw e;
             });
@@ -57,9 +57,10 @@ if (Meteor.isServer) {
                                 "metadata.height": size.height,
                                 "metadata.finishedProcessing": true
                             }
-                        }, function(){done();});
-                    }
-                    else{
+                        }, function() {
+                            done();
+                        });
+                    } else {
                         console.log("Error in setting metadata: " + err);
                         done();
                     }
@@ -79,7 +80,7 @@ if (Meteor.isServer) {
         // to save the image in the correct orientation 
         gm(readStream, fileObj.name())
             .autoOrient().resize(1000).quality(75)
-            .stream(function(err, stdout, stderr) {
+            .stream('JPG', function(err, stdout, stderr) {
                 if (err) {
                     done(err);
                     return err;
@@ -95,9 +96,13 @@ if (Meteor.isServer) {
                 // set the dataError value to the error. This way
                 // the 'close' callback will know if there was an
                 // error while processing
-                stderr.on('data', function(err){dataError = err;});
-                stdout.on('close', function(){done(dataError);});
-                
+                stderr.on('data', function(err) {
+                    dataError = err;
+                });
+                stdout.on('close', function() {
+                    done(dataError);
+                });
+
             });
     };
 

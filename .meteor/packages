@@ -15,3 +15,5 @@ pinglamb:bootstrap3
 cfs:graphicsmagick
 mizzao:jquery-ui
 cfs:tempstore
+mrt:external-file-loader
+

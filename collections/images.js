@@ -1,7 +1,7 @@
 //Set Cache Control headers so we don't overload our meteor server with http requests
 FS.HTTP.setHeadersForGet([
     ['Cache-Control', 'public, max-age=31536000']
-    
+
 ]);
 
 // Set the base URL for file: http://domain.com/baseURL/files/images/
@@ -13,7 +13,7 @@ FS.HTTP.setBaseUrl('/depository');
 
 //Create the master store
 var masterStore = new FS.Store.FileSystem("master", {
-    //path: masterStoreImagePath,
+    path: masterStoreImagePath,
 
     //Create the thumbnail as we save to the store.
     transformWrite: function(fileObj, readStream, writeStream) {
@@ -23,11 +23,16 @@ var masterStore = new FS.Store.FileSystem("master", {
 
 //Create a thumbnail store
 var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
-    //path: thumbnailStoreImagePath,
-    //chunkSize: 1024 * 512
+    path: thumbnailStoreImagePath,
 
-    // TODO: All the numbnails should be in JPG format
-    // so I need to convert all of them to .jpg
+    beforeWrite: function(fileObj) {
+        // We return an object, which will change the
+        // filename extension and type for this store only.
+        return {
+            extension: 'jpg',
+            type: 'image/jpg'
+        };
+    },
 
     //Create the thumbnail as we save to the store.
     transformWrite: function(fileObj, readStream, writeStream) {
@@ -61,7 +66,13 @@ Images.allow({
         return userId;
     },
     update: function(userId, file, fields, modifier) {
-        return userId;
+
+        // This is to check whether or not CollectionFS is trying
+        // to update the Image
+        var validCFSUpdate = _.intersection(fields, ['chunkSize', 'chunkCount', 'chunkSize']).length > 0
+
+        // Only allow logged in users and CollectionFS to update the Image
+        return userId && validCFSUpdate;
     },
     remove: function(userId, file) {
         return false;
