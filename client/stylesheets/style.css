@@ -95,9 +95,11 @@ html {
 
 .show-more-results {
     text-align: center;
+    height: 3rem;
 }
 
 input.modal-dimension {
+    display: inline;
     width: auto;
 }
 

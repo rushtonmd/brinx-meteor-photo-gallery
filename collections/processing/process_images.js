@@ -1,10 +1,18 @@
 if (Meteor.isServer) {
 
+
+    // I created an image processing queue so that all the images don't try
+    // to access graphicsmagick at the same time. I typically have a small
+    // server that cannot handle more than a handful of simultaneous processes
+    // at the same time. I found that when I tried to upload a bunch of images
+    // at once, the server broked and all things went to hell. This queue 
+    // keeps things calm and happy.
     var imageProcessingQueue = new PowerQueue({
         autotart: true,
         maxFailures: 3
     });
 
+    // Reset the queue on restart
     imageProcessingQueue.reset();
 
 
@@ -39,7 +47,7 @@ if (Meteor.isServer) {
 
         gm(readStream)
             .size({
-                bufferStream: false
+                bufferStream: true
             }, FS.Utility.safeCallback(
                 function(err, size) {
                     if (!err) {
@@ -65,6 +73,10 @@ if (Meteor.isServer) {
 
     useGMToCreateThumbnail = function(done, fileObj, readStream, writeStream) {
 
+        // Using Graphicsmagick, here we resize the original file to 
+        // 1000px wide with a 75% quality rating. This keeps the images 
+        // smaller and for faster loading. The autoOrient() is used
+        // to save the image in the correct orientation 
         gm(readStream, fileObj.name())
             .autoOrient().resize(1000).quality(75)
             .stream(function(err, stdout, stderr) {
@@ -76,6 +88,7 @@ if (Meteor.isServer) {
                 // Create a variable that is scoped to this stream function
                 var dataError = false;
 
+                // Pipe the processed stream to the writestream
                 stdout.pipe(writeStream);
 
                 // If there is an error in the data stream, 
@@ -85,8 +98,8 @@ if (Meteor.isServer) {
                 stderr.on('data', function(err){dataError = err;});
                 stdout.on('close', function(){done(dataError);});
                 
-                
             });
     };
+
 
 }

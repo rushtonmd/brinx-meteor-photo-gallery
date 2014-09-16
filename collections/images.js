@@ -8,15 +8,26 @@ FS.HTTP.setHeadersForGet([
 // I used 'depository' because... well who knows.
 FS.HTTP.setBaseUrl('/depository');
 
+//FS.debug = true;
+
 
 //Create the master store
 var masterStore = new FS.Store.FileSystem("master", {
-    path: fileStoreImagePath
+    //path: masterStoreImagePath,
+
+    //Create the thumbnail as we save to the store.
+    transformWrite: function(fileObj, readStream, writeStream) {
+        readStream.pipe(writeStream);
+    }
 });
 
 //Create a thumbnail store
 var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
-    path: fileStoreImagePath,
+    //path: thumbnailStoreImagePath,
+    //chunkSize: 1024 * 512
+
+    // TODO: All the numbnails should be in JPG format
+    // so I need to convert all of them to .jpg
 
     //Create the thumbnail as we save to the store.
     transformWrite: function(fileObj, readStream, writeStream) {
@@ -24,15 +35,15 @@ var thumbnailStore = new FS.Store.FileSystem("thumbnail", {
     }
 });
 
-
 //Create globally scoped Images collection.
 Images = new FS.Collection("images", {
     stores: [thumbnailStore, masterStore],
+    chunkSize: 1024 * 1024, // Set chunk size to 1MB
     filter: {
-        maxSize: 50331648, //in bytes
+        maxSize: 52428800, //50mb in bytes
         allow: {
             contentTypes: ['image/*'],
-            extensions: ['png', 'jpg', 'jpeg', 'gif']
+            extensions: ['png', 'jpg', 'jpeg', 'gif', 'tif', 'tiff']
         },
         onInvalid: function(message) {
             if (Meteor.isClient) {
@@ -44,14 +55,13 @@ Images = new FS.Collection("images", {
     }
 });
 
-
 // Only allow inserting of images from a logged in user
 Images.allow({
     insert: function(userId, file) {
         return userId;
     },
     update: function(userId, file, fields, modifier) {
-        return false;
+        return userId;
     },
     remove: function(userId, file) {
         return false;
@@ -60,6 +70,7 @@ Images.allow({
         return true;
     }
 });
+
 
 // Publish and subscribe to Images
 if (Meteor.isServer) {

@@ -1,5 +1,6 @@
 {
     "brinx_signup_code": "12345",
-    "image_file_path": "~/uploads/thumbnails"
+    "thumbnail_image_file_path": "~/uploads/thumbnails",
+    "master_image_file_path": "~/uploads/masters"
 
 }

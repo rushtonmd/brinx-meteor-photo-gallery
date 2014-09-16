@@ -2,9 +2,9 @@ Template.mediaItems.events({
     'change #fileInput': function(event, template) {
 
         FS.Utility.eachFile(event, function(file) {
-            console.log("Adding file!");
             Images.insert(file, function(err, fileObj) {
-                console.log("Added image " + fileObj.name());
+                console.log(err);
+                if (err) throw err;
                 Meteor.call('createMediaItem', {name: fileObj.name(), _id: fileObj._id});
             });
         });
@@ -65,10 +65,6 @@ Template.mediaItems.events({
     'click .delete-media-item': function(event) {
         // Get the media ID
         var mediaID = $(event.currentTarget).attr('media-id');
-
-
-
-        console.log("deleting " + mediaID);
 
         $("div.media-item[media-id='" + mediaID + "']").fadeOut(function() {
             Meteor.call('deleteMediaItem', mediaID);

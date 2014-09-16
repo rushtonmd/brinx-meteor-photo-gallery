@@ -6,4 +6,5 @@ getDefaultSettingsValue = function(key){
 };
 
 // Global value for the path where the images are saved. 
-fileStoreImagePath = getDefaultSettingsValue('image_file_path') || "~/uploads/thumbnails";
+thumbnailStoreImagePath = getDefaultSettingsValue('thumbnail_image_file_path');
+masterStoreImagePath = getDefaultSettingsValue('master_image_file_path');
