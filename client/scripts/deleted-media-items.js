@@ -1,4 +1,4 @@
-Template.mediaItems.events({
+Template.deletedMediaItems.events({
     'change #fileInput': function(event, template) {
 
         FS.Utility.eachFile(event, function(file) {
@@ -76,7 +76,7 @@ Template.mediaItems.events({
 
 });
 
-Template.mediaItem.helpers({
+Template.deletedMediaItem.helpers({
     thumbnailReady: function() {
         // Determine if the thumbnail has indeed been fully created
         return this.isUploaded() && this.url({
@@ -86,35 +86,32 @@ Template.mediaItem.helpers({
 });
 
 
-Template.mediaItems.created = function() {
+Template.deletedMediaItems.created = function() {
     Meteor.Loader.loadJs("/external-libraries/jquery.ui.touch-punch.min.js");
 };
 
 
-Template.mediaItems.mediaItems = function() {
-    // We need to sort on the client side so that the newest item is inserted
-    // and shows at the top of the list prior to syncing with the server
+Template.deletedMediaItems.deletedMediaItems = function() {
     var limit = Session.get('itemsLimit');
     return MediaItems.find({
         'deleted': {
-            '$ne': true
+            '$exists': true
         }
     }, {
-        //'limit': limit,
+        'limit': limit,
         'sort': {
             rank: -1
         }
     });
 };
 
-Template.mediaItem.image = function() {
+Template.deletedMediaItem.image = function() {
     // backwards compatability 
     var fileID = this.imageID || this.file._id;
-
     return Images.findOne(fileID);
 };
 
-Template.mediaItems.moreResults = function() {
+Template.deletedMediaItems.moreResults = function() {
     // If, once the subscription is ready, we have less rows than we
     // asked for, we've got all the rows in the collection.
     return !(MediaItems.find().count() < Session.get("itemsLimit"));
@@ -129,61 +126,19 @@ $(function() {
     }, 3000);
 });
 
-// whenever #showMoreResults becomes visible on the screen, retrieve more results
+// whenever #showMoreResults becomes visible, retrieve more results
 function showMoreVisible() {
-    var threshold, target = $(".show-more-results");
+    var threshold, target = $(".show-more-deleted-results");
     if (!target.length) return;
 
     threshold = $(window).scrollTop() + $(window).height();
 
     if (target.offset().top < threshold) {
 
-        // Increase the number of items returned
-        var newLimit = Session.get("itemsLimit") + Session.get("adminPageSize");
+         var newLimit = Session.get("itemsLimit") + Session.get("trashPageSize");
 
+        // Increase the number of items returned
         Session.set("itemsLimit", newLimit);
     };
 
-};
-
-SimpleRationalRanks = {
-    beforeFirst: function(firstRank) {
-        return firstRank + 1;
-    },
-    between: function(beforeRank, afterRank) {
-        return (beforeRank + afterRank) / 2;
-    },
-    afterLast: function(lastRank) {
-        return lastRank - 1;
-    }
-};
-
-Template.mediaItems.rendered = function() {
-
-    this.$('#media-list').sortable({
-        handle: ".handle",
-        stop: function(event, ui) { // fired when an item is dropped
-            var el = ui.item.get(0),
-                before = ui.item.prev().get(0),
-                after = ui.item.next().get(0);
-
-            el2 = el;
-
-            var newRank;
-            if (!before) { // moving to the top of the list
-                newRank = SimpleRationalRanks.beforeFirst(UI.getElementData(after).rank);
-
-            } else if (!after) { // moving to the bottom of the list
-                newRank = SimpleRationalRanks.afterLast(UI.getElementData(before).rank);
-
-            } else {
-                newRank = SimpleRationalRanks.between(
-                    UI.getElementData(before).rank,
-                    UI.getElementData(after).rank);
-            }
-
-            Meteor.call('setNewOrderOnMediaItem', UI.getElementData(el)._id, newRank);
-
-        }
-    });
 };

@@ -87,27 +87,34 @@ if (Meteor.isServer) {
         }
     });
 
-    Meteor.publish('mediaItems', function(limit) {
+    // Publish the MediaItems to the client
+    // limit [integer]: the number of items to return from the request (for pagination)
+    // isDeleted [boolean]: 
+    //          true: return items that have been marked as DELETED in the database
+    //          false: return items that have not bee marked as DELETED
+    //  
+    Meteor.publish('mediaItems', function(limit, isDeleted) {
+        console.log("LOG" + " : " + limit + " : " + isDeleted);
         return MediaItems.find({
             'deleted': {
-                '$ne': true
+                '$exists': isDeleted
             }
         }, {
             'limit': limit,
             'sort': {
                 rank: -1
             }
-
         });
     });
 
+
 } else {
 
-    ITEMS_INCREMENT = 15;
+    var adminPageSize = ClientSettingsValue('admin_page_size') || 5;
+    var trashPageSize = ClientSettingsValue('trash_page_size') || 5;
 
-    Session.setDefault('itemsLimit', ITEMS_INCREMENT);
+    // Set the default values for the page sizes
+    Session.setDefault('adminPageSize', adminPageSize);
+    Session.setDefault('trashPageSize', trashPageSize);
 
-    Deps.autorun(function() {
-        Meteor.subscribe('mediaItems', Session.get('itemsLimit'));
-    });
 }

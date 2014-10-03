@@ -1,17 +1,46 @@
+Router.configure({
+    //layoutTemplate: 'mediaItems',
+    loadingTemplate: 'Loading',
+    notFoundTemplate: '404'
+});
+
 Router.map(function() {
     this.route('mediaItems', {
         path: '/',
         onBeforeAction: function(pause) {
             // render the login template but keep the url in the browser the same
             AccountsEntry.signInRequired(this);
+
+            // Set the size of the page. i.e. how many items to return from the Media Items collection
+            Session.set('itemsLimit', Session.get("adminPageSize"));
+        },
+        waitOn: function() {
+            // return one handle, a function, or an array
+            var limit = Session.get('itemsLimit') || Session.get('adminPageSize'); 
+            return Meteor.subscribe('mediaItems', limit, false);
         }
     });
-    this.route('allGalleryMediaItems', { 
+    this.route('deletedMediaItems', {
+        path: '/trash',
+        onBeforeAction: function(pause) {
+            // render the login template but keep the url in the browser the same
+            AccountsEntry.signInRequired(this);
+
+            // Set the size of the page. i.e. how many items to return from the Media Items collection
+            Session.set('itemsLimit', Session.get("trashPageSize"));
+        },
+        waitOn: function() {
+            // return one handle, a function, or an array
+            var limit = Session.get('itemsLimit') || Session.get('trashPageSize'); 
+            return Meteor.subscribe('mediaItems', limit, true);
+        }
+    });
+    this.route('allGalleryMediaItems', {
         path: '/api/media-items',
         where: 'server',
         action: function() {
 
-        	// Reject anything but GET request
+            // Reject anything but GET request
             if (this.request.method != 'GET') {
                 this.response.end("Nope.");
                 return 0;

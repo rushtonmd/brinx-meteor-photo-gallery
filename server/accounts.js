@@ -1,6 +1,9 @@
 Meteor.startup(function() {
+	
+	var BRINX_SIGNUP_CODE = ServerSettingsValue('brinx_signup_code') || '12345';
+
     AccountsEntry.config({
-        signupCode: typeof Meteor.settings != 'undefined' && Meteor.settings.brinx_signup_code || '12345'//, // only restricts username+password users, not OAuth
+        signupCode: BRINX_SIGNUP_CODE //, // only restricts username+password users, not OAuth
         //defaultProfile: someDefault: 'default'
     });
 });
