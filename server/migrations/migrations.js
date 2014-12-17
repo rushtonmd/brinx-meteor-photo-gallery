@@ -5,7 +5,7 @@ Meteor.startup(function() {
     if (!Migrations.findOne({
         name: "storeFileIDInsteadOfEJSONObject"
     })) {
-    	console.log("Running migration to set the imageID of all MediaItems.")
+        console.log("Running migration to set the imageID of all MediaItems.")
         MediaItems.find().forEach(function(mediaItem) {
             if (mediaItem.file && mediaItem.file.getFileRecord()) {
 
@@ -20,6 +20,12 @@ Meteor.startup(function() {
                         imageID: fileID
                     }
                 });
+
+                Images.update(fileID, {
+                    $set: {
+                        "metadata.finishedProcessing": true
+                    }
+                });
             };
 
 
@@ -27,5 +33,5 @@ Meteor.startup(function() {
         Migrations.insert({
             name: "storeFileIDInsteadOfEJSONObject"
         });
-    }
+    };
 });

@@ -94,7 +94,6 @@ if (Meteor.isServer) {
     //          false: return items that have not bee marked as DELETED
     //  
     Meteor.publish('mediaItems', function(limit, isDeleted) {
-        console.log("LOG" + " : " + limit + " : " + isDeleted);
         return MediaItems.find({
             'deleted': {
                 '$exists': isDeleted

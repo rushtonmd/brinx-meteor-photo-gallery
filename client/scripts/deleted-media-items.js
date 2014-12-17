@@ -98,7 +98,7 @@ Template.deletedMediaItems.deletedMediaItems = function() {
             '$exists': true
         }
     }, {
-        'limit': limit,
+        //'limit': limit,
         'sort': {
             rank: -1
         }

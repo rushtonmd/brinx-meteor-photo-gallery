@@ -5,9 +5,8 @@
     <div id="images" class="container">
     	<div class="row input-file-row">
 			<div class="col-md-6 col-md-offset-3">
-			    <span class="btn btn-file btn-primary">
-			    	<i class="glyphicon glyphicon-upload"></i>
-				    DELETED ITEMS <input id="fileInput" type="file" multiple="multiple">
+			    <span class="btn btn-file btn-danger disabled">
+				    DELETED ITEMS 
 				</span>
 			</div>
 			
@@ -34,11 +33,6 @@
 <template name="deletedMediaItem">
     <div class="media-item" media-id="{{_id}}">
         <div class="row">
-            <div class='col-xs-1 handle'>
-                <i class="glyphicon glyphicon-chevron-up"></i>
-                <i class="glyphicon glyphicon-align-justify"></i>
-                <i class="glyphicon glyphicon-chevron-down"></i>
-            </div>
             <div class="col-xs-offset-1 col-xs-6 col-sm-offset-0 col-sm-3">
             	{{#with image}}
             	{{#if thumbnailReady}} {{! if we have a url to the thumbnail store we will display the image}}
@@ -56,9 +50,6 @@
                 <p>{{description}}</p>
             </div>
             <div class="col-xs-offset-1 col-xs-2 col-sm-offset-0 row-button-container">
-            	<span class="btn btn-info edit-image row-buttons" data-toggle="modal" data-target="#myModal" media-id="{{_id}}">
-			    	<i class="glyphicon glyphicon-pencil"></i>
-				</span>
             	<span class="btn btn-danger delete-image row-buttons" data-toggle="modal" data-target="#deleteMediaItemModal" media-id="{{_id}}" media-title="{{title}}">
 			    	<i class="glyphicon glyphicon-remove"></i>
 				</span>

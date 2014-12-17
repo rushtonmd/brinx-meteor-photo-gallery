@@ -1,6 +1,6 @@
 
-THUMBNAIL_STORE_IMAGE_PATH = ServerSettingsValue('thumbnail_image_file_path');
-MASTER_STORE_IMAGE_PATH = ServerSettingsValue('master_image_file_path');
+THUMBNAIL_STORE_IMAGE_PATH = ServerSettingsValue('thumbnail_image_file_path') || undefined;
+MASTER_STORE_IMAGE_PATH = ServerSettingsValue('master_image_file_path') || undefined;
 
 //Create the master store
 var masterStore = new FS.Store.FileSystem("master", {

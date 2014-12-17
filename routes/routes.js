@@ -1,37 +1,54 @@
 Router.configure({
     //layoutTemplate: 'mediaItems',
-    loadingTemplate: 'Loading',
+    loadingTemplate: 'loading',
     notFoundTemplate: '404'
 });
 
 Router.map(function() {
+
     this.route('mediaItems', {
         path: '/',
-        onBeforeAction: function(pause) {
+        onBeforeAction: function() {
             // render the login template but keep the url in the browser the same
             AccountsEntry.signInRequired(this);
-
-            // Set the size of the page. i.e. how many items to return from the Media Items collection
+        },
+        onRun: function(){
+             // Set the size of the page. i.e. how many items to return from the Media Items collection
             Session.set('itemsLimit', Session.get("adminPageSize"));
+            this.next();
         },
         waitOn: function() {
-            // return one handle, a function, or an array
-            var limit = Session.get('itemsLimit') || Session.get('adminPageSize'); 
+
+            // Gets the pagination limit, or loads all by setting value to undefined
+            var limit = Session.get('itemsLimit') || undefined; 
+
             return Meteor.subscribe('mediaItems', limit, false);
         }
     });
+
+    this.route('imageDepository', {
+        path: '/depository/*', 
+        onRun: function(){
+            console.log("HERE!");
+            this.next();
+        }
+    });
+
     this.route('deletedMediaItems', {
         path: '/trash',
-        onBeforeAction: function(pause) {
+        onBeforeAction: function() {
             // render the login template but keep the url in the browser the same
             AccountsEntry.signInRequired(this);
-
-            // Set the size of the page. i.e. how many items to return from the Media Items collection
+        },
+        onRun: function(){
+             // Set the size of the page. i.e. how many items to return from the Media Items collection
             Session.set('itemsLimit', Session.get("trashPageSize"));
+            this.next();
         },
         waitOn: function() {
             // return one handle, a function, or an array
-            var limit = Session.get('itemsLimit') || Session.get('trashPageSize'); 
+            var limit = Session.get('itemsLimit') || undefined; 
+
             return Meteor.subscribe('mediaItems', limit, true);
         }
     });
@@ -104,7 +121,4 @@ Router.map(function() {
             this.response.end(EJSON.stringify(returnData));
         }
     });
-    // this.route('404', {
-    //     path: '/*'
-    // });
 });
