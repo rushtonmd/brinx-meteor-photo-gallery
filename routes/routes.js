@@ -26,14 +26,6 @@ Router.map(function() {
         }
     });
 
-    this.route('imageDepository', {
-        path: '/depository/*', 
-        onRun: function(){
-            console.log("HERE!");
-            this.next();
-        }
-    });
-
     this.route('deletedMediaItems', {
         path: '/trash',
         onBeforeAction: function() {

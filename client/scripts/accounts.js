@@ -4,7 +4,7 @@
          //privacyUrl: '/privacy-policy', // if set adds link to privacy policy and 'you agree to ...' on sign-up page
          //termsUrl: '/terms-of-use', // if set adds link to terms  'you agree to ...' on sign-up page
          homeRoute: '/sign-in', // mandatory - path to redirect to after sign-out
-         dashboardRoute: '/images', // mandatory - path to redirect to after successful sign-in
+         dashboardRoute: '/', // mandatory - path to redirect to after successful sign-in
          //profileRoute: 'profile',
          passwordSignupFields: 'EMAIL_ONLY',
          showSignupCode: true,
