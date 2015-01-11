@@ -1,5 +1,6 @@
 # Brinx Meteor Photo Gallery
 
+Pretty awesome.
 
 ## Dependent Packages.
 
