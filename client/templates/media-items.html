@@ -2,7 +2,8 @@
 	
     {{>navigationBar}}
 
-    <div id="images" class="container">
+    <!-- Uncomment all this for testing -->
+    <!-- <div id="images" class="container">
     	<div class="row input-file-row">
 			<div class="col-md-6 col-md-offset-3">
 			    <span class="btn btn-file btn-primary">
@@ -24,12 +25,41 @@
         	<img class="loading-more-images-animation" src="/loading-more-images.gif">
     	</div>
     	{{/if}}
+    </div> -->
+
+
+    <div id="images" class="container">
+        <div class="row input-file-row">
+            <div class="col-md-6 col-md-offset-3">
+                <span class="btn btn-file btn-primary">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    Upload Images <input id="fileInput" type="file" multiple="multiple">
+                </span>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div id="media-list">
+                    {{> pagesNav}}
+                    {{> pages}}
+                </div>
+            </div>
+        </div>
     </div>
 
     {{>modifyModal}}
     {{>deleteMediaItemModal}}
 
 </template>
+
+<template name="testItemTemplate"> 
+    <div>
+        <span>TEST!</span>
+        <span>{{_id}}</span>
+    </div>
+</template>
+
 
 
 <template name="mediaItem">

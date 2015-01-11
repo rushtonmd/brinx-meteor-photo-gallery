@@ -1,5 +1,30 @@
 MediaItems = new Meteor.Collection('mediaItems');
 
+Pages = new Meteor.Pagination(MediaItems, {
+	router: "iron-router",
+	homeRoute: ["/", "/items/"],
+	route: "/items/",
+	routerTemplate: "mediaItem",
+	routerLayout: "mediaItems",
+	routeSettings: function(route){
+		AccountsEntry.signInRequired(route);
+	},
+	availableSettings: {
+		sort: true
+	},
+	itemTemplate: 'mediaItem',
+	infinite: true,
+	perPage: 2,
+	sort: {
+		rank: -1
+	},
+    filters: {
+        'deleted': {
+            '$ne': true
+        }
+    }
+});
+
 MediaItems.allow({
     insert: function(userId, file) {
         return false;
@@ -22,12 +47,13 @@ if (Meteor.isServer) {
             // Ensure user is logged in 
             if (!this.userId) return;
  
-            
             MediaItems.insert({
                 title: imageFile.name,
                 description: '(no description)',
                 rank: new Date().getTime(),
                 imageID: imageFile._id
+            }, function(err, mediaObj){
+                // Callback for insert
             });
         },
 
@@ -87,24 +113,27 @@ if (Meteor.isServer) {
         }
     });
 
+    // ******* Since switching to Pagination, I don't think this is needed. 
+    // ******* The Pagination package auto publishes the collection
+    //
     // Publish the MediaItems to the client
     // limit [integer]: the number of items to return from the request (for pagination)
     // isDeleted [boolean]: 
     //          true: return items that have been marked as DELETED in the database
     //          false: return items that have not bee marked as DELETED
     //  
-    Meteor.publish('mediaItems', function(limit, isDeleted) {
-        return MediaItems.find({
-            'deleted': {
-                '$exists': isDeleted
-            }
-        }, {
-            'limit': limit,
-            'sort': {
-                rank: -1
-            }
-        });
-    });
+    // Meteor.publish('mediaItems', function(limit, isDeleted) {
+    //     return MediaItems.find({
+    //         'deleted': {
+    //             '$exists': isDeleted
+    //         }
+    //     }, {
+    //         'limit': limit,
+    //         'sort': {
+    //             rank: -1
+    //         }
+    //     });
+    // });
 
 
 } else {

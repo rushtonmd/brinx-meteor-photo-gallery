@@ -83,6 +83,12 @@ Template.mediaItem.helpers({
             store: 'thumbnail'
         }) && (typeof this.metadata != 'undefined') && this.metadata.finishedProcessing;
     },
+    image:  function(){
+
+        var fileID = this.imageID || this.file._id;
+
+        return Images.findOne(fileID);
+    }
 });
 
 
@@ -107,12 +113,12 @@ Template.mediaItems.mediaItems = function() {
     });
 };
 
-Template.mediaItem.image = function() {
-    // backwards compatability 
-    var fileID = this.imageID || this.file._id;
+// Template.mediaItem.image = function() {
+//     // backwards compatability 
+//     var fileID = this.imageID || this.file._id;
 
-    return Images.findOne(fileID);
-};
+//     return Images.findOne(fileID);
+// };
 
 Template.mediaItems.moreResults = function() {
     // If, once the subscription is ready, we have less rows than we
@@ -161,6 +167,7 @@ SimpleRationalRanks = {
 Template.mediaItems.rendered = function() {
 
     this.$('#media-list').sortable({
+        items: ".media-item",
         handle: ".handle",
         stop: function(event, ui) { // fired when an item is dropped
             var el = ui.item.get(0),
@@ -171,18 +178,19 @@ Template.mediaItems.rendered = function() {
 
             var newRank;
             if (!before) { // moving to the top of the list
-                newRank = SimpleRationalRanks.beforeFirst(UI.getElementData(after).rank);
+                newRank = SimpleRationalRanks.beforeFirst(UI.getData(after).rank);
 
             } else if (!after) { // moving to the bottom of the list
-                newRank = SimpleRationalRanks.afterLast(UI.getElementData(before).rank);
+                newRank = SimpleRationalRanks.afterLast(UI.getData(before).rank);
 
             } else {
                 newRank = SimpleRationalRanks.between(
-                    UI.getElementData(before).rank,
-                    UI.getElementData(after).rank);
+                    UI.getData(before).rank,
+                    UI.getData(after).rank);
             }
 
-            Meteor.call('setNewOrderOnMediaItem', UI.getElementData(el)._id, newRank);
+            //Meteor.call('setNewOrderOnMediaItem', UI.getElementData(el)._id, newRank);
+            Meteor.call('setNewOrderOnMediaItem', UI.getData(el)._id, newRank);
 
         }
     });

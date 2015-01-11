@@ -67,6 +67,7 @@ html {
 }
 .media-item {
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 .media-item .row {
     background-color: rgb(230, 230, 230);

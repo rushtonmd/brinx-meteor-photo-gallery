@@ -4,46 +4,47 @@ Router.configure({
     notFoundTemplate: '404'
 });
 
+
 Router.map(function() {
 
-    this.route('mediaItems', {
-        path: '/',
-        onBeforeAction: function() {
-            // render the login template but keep the url in the browser the same
-            AccountsEntry.signInRequired(this);
-        },
-        onRun: function(){
-             // Set the size of the page. i.e. how many items to return from the Media Items collection
-            Session.set('itemsLimit', Session.get("adminPageSize"));
-            this.next();
-        },
-        waitOn: function() {
+    // this.route('mediaItems', {
+    //     path: '/',
+    //     onBeforeAction: function() {
+    //         // render the login template but keep the url in the browser the same
+    //         AccountsEntry.signInRequired(this);
+    //     },
+    //     onRun: function(){
+    //          // Set the size of the page. i.e. how many items to return from the Media Items collection
+    //         Session.set('itemsLimit', Session.get("adminPageSize"));
+    //         this.next();
+    //     },
+    //     waitOn: function() {
 
-            // Gets the pagination limit, or loads all by setting value to undefined
-            var limit = Session.get('itemsLimit') || undefined; 
+    //         // Gets the pagination limit, or loads all by setting value to undefined
+    //         var limit = Session.get('itemsLimit') || undefined; 
 
-            return Meteor.subscribe('mediaItems', limit, false);
-        }
-    });
+    //         return Meteor.subscribe('mediaItems', limit, false);
+    //     }
+    // });
 
-    this.route('deletedMediaItems', {
-        path: '/trash',
-        onBeforeAction: function() {
-            // render the login template but keep the url in the browser the same
-            AccountsEntry.signInRequired(this);
-        },
-        onRun: function(){
-             // Set the size of the page. i.e. how many items to return from the Media Items collection
-            Session.set('itemsLimit', Session.get("trashPageSize"));
-            this.next();
-        },
-        waitOn: function() {
-            // return one handle, a function, or an array
-            var limit = Session.get('itemsLimit') || undefined; 
+    // this.route('deletedMediaItems', {
+    //     path: '/trash',
+    //     onBeforeAction: function() {
+    //         // render the login template but keep the url in the browser the same
+    //         AccountsEntry.signInRequired(this);
+    //     },
+    //     onRun: function(){
+    //          // Set the size of the page. i.e. how many items to return from the Media Items collection
+    //         Session.set('itemsLimit', Session.get("trashPageSize"));
+    //         this.next();
+    //     },
+    //     waitOn: function() {
+    //         // return one handle, a function, or an array
+    //         var limit = Session.get('itemsLimit') || undefined; 
 
-            return Meteor.subscribe('mediaItems', limit, true);
-        }
-    });
+    //         return Meteor.subscribe('mediaItems', limit, true);
+    //     }
+    // });
     this.route('allGalleryMediaItems', {
         path: '/api/media-items',
         where: 'server',
