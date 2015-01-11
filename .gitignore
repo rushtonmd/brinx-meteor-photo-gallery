@@ -1,2 +1,5 @@
 .meteor/local
 .meteor/meteorite
+.meteor/packages
+.meteor/release
+.meteor/versions
